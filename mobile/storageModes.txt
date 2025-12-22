@@ -1,0 +1,3 @@
+Name: EXTERNAL_PE Folder: /storage/emulated/0/.PsychEngine
+Name: EXTERNAL_SE Folder: /storage/emulated/0/.ShadowEngine
+Name: EXTERNAL_PX Folder: /storage/emulated/0/.PsychExtended

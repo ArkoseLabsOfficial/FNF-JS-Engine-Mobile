@@ -160,6 +160,7 @@ class Project extends HXProject
 		configureHaxelibs();
 		configureAssets();
 		configureIcons();
+		setupMobileThings();
 	}
 
 	function flair()
@@ -522,7 +523,7 @@ class Project extends HXProject
 		// addAsset("art/readme.txt", "do NOT readme.txt", "art", shouldEmbedArt);
 		// addAsset("CHANGELOG.md", "changelog.txt", "/", shouldEmbedArt);
 		addAssetPath("example_mods", "mods", "default", ["*"], exclude, shouldEmbed); // lololololoolollo
-		
+
 		if (isLinux() && !isDebug())
 			addAsset("gamemode.ini");
 	}
@@ -905,6 +906,65 @@ class Project extends HXProject
 		if (command != "display")
 		{
 			Log.info('[INFO] ${message}');
+		}
+	}
+
+	//Mobile
+	static final MOBILE_CONTROLS_ALLOWED:FeatureFlag = "MOBILE_CONTROLS_ALLOWED";
+	function setupMobileThings() {
+		if (isAndroid() && !isDebug())
+		{
+			// <certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug" />
+			keystore = new Keystore();
+			keystore.path = haxe.io.Path.join([Sys.getCwd(), "key.keystore"]);
+			keystore.alias = "psychport";
+			keystore.password = "psychengine";
+			keystore.aliasPassword = "psychengine";
+		}
+		configureAndroidSettings();
+		addMobileAssets();
+		addHaxelib('mobile-controls');
+	}
+	function configureAndroidSettings()
+	{
+		if (isAndroid())
+		{
+			var permissions = [
+				"android.permission.MANAGE_MEDIA",
+				"android.permission.MANAGE_EXTERNAL_STORAGE",
+				"android.permission.WRITE_EXTERNAL_STORAGE",
+				"android.permission.READ_EXTERNAL_STORAGE",
+				"android.permission.READ_MEDIA_IMAGES",
+				"android.permission.READ_MEDIA_AUDIO",
+				"android.permission.READ_MEDIA_VIDEO",
+				"android.permission.VIBRATE",
+				"android.permission.INTERNET",
+				"android.permission.ACCESS_WIFI_STATE",
+				"android.permission.ACCESS_NETWORK_STATE",
+				"android.permission.CAPTURE_AUDIO_OUTPUT"
+			];
+
+			for (p in permissions) {
+				android.permissions.push(p);
+			}
+
+			android.targetSdkVersion = 35;
+			android.minSdkVersion = 24;
+
+			info("Android Permissions and SDK (35/24) configured.");
+		}
+	}
+	function addMobileAssets() {
+		var exclude = EXCLUDE_ASSETS.concat(isWeb() ? EXCLUDE_ASSETS_WEB : EXCLUDE_ASSETS_NATIVE);
+		var shouldEmbed = EMBED_ASSETS.isEnabled(this);
+		if (MOBILE_CONTROLS_ALLOWED.isEnabled(this))
+		{
+			// <assets path="mobile/assets" rename="assets/mobile"/>
+			addAssetPath("mobile/assets", "assets/mobile", "default", ["*"], exclude, shouldEmbed);
+			// <assets path="mobile/storageModes.txt" rename="mobile/storageModes.txt"/>
+			addAsset("mobile/storageModes.txt", "mobile/storageModes.txt", "default", shouldEmbed);
+
+			info("Mobile Controls and storage assets included.");
 		}
 	}
 }

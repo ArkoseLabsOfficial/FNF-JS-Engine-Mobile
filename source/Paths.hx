@@ -891,7 +891,7 @@ class Paths
 	#if MODS_ALLOWED
 	//Loads mods.
 	inline static public function mods(key:String = '') {
-		return 'mods/' + key;
+		return #if mobile StorageUtil.getExternalStorageDirectory() + #end 'mods/' + key;
 	}
 	//Loads fonts in mods/fonts.
 	inline static public function modsFont(key:String) {
@@ -949,7 +949,7 @@ class Paths
 				return fileToCheck;
 
 		}
-		return 'mods/' + key;
+		return #if mobile StorageUtil.getExternalStorageDirectory() + #end 'mods/' + key;
 	}
 
 	public static function getBackupFilePath(songPath:String, diff:String):String {

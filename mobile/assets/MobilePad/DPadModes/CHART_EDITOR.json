@@ -1,0 +1,36 @@
+{
+  "buttons": [
+    {
+      "button": "buttonUp",
+      "buttonIDs": ["UP"],
+      "graphic": "up",
+      "x": 0,
+      "y": 465,
+      "color": "0xFF12FA05"
+    },
+    {
+      "button": "buttonLeft",
+      "buttonIDs": ["LEFT"],
+      "graphic": "left",
+      "x": 132,
+      "y": 465,
+      "color": "0xFFC24B99"
+    },
+    {
+      "button": "buttonRight",
+      "buttonIDs": ["RIGHT"],
+      "graphic": "right",
+      "x": 132,
+      "y": 585,
+      "color": "0xFFF9393F"
+    },
+    {
+      "button": "buttonDown",
+      "buttonIDs": ["DOWN"],
+      "graphic": "down",
+      "x": 0,
+      "y": 585,
+      "color": "0xFF00FFFF"
+    }
+  ]
+}

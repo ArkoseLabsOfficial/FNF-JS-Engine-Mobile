@@ -1,0 +1,28 @@
+{
+  "buttons": [
+    {
+      "button": "buttonP",
+      "buttonIDs": ["P"],
+      "graphic": "online_pause",
+      "x": 1156,
+      "y": 2,
+      "color": "0xE5DE00"
+    },
+    {
+      "button": "buttonX",
+      "buttonIDs": ["X"],
+      "graphic": "x",
+      "x": 1156,
+      "y": 596,
+      "color": "0x99062D"
+    },
+    {
+      "button": "buttonY",
+      "buttonIDs": ["Y"],
+      "graphic": "y",
+      "x": 1032,
+      "y": 596,
+      "color": "0x4A35B9"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "buttons": [
+    {
+      "button": "buttonP",
+      "buttonIDs": ["P"],
+      "graphic": "online_pause",
+      "x": 1156,
+      "y": 2,
+      "color": "0xE5DE00"
+    },
+    {
+      "button": "buttonC",
+      "buttonIDs": ["C"],
+      "graphic": "online_chat",
+      "x": 1032,
+      "y": 2,
+      "color": "0x44FF00"
+    },
+    {
+      "button": "buttonT",
+      "buttonIDs": ["T"],
+      "graphic": "online_emote",
+      "x": 908,
+      "y": 2,
+      "color": "0xA7D2FF"
+    }
+  ]
+}

@@ -63,6 +63,15 @@ class Main extends Sprite {
 
 	public function new() {
 		super();
+		#if mobile
+		#if android
+		StorageUtil.initExternalStorageDirectory(); //do not make this jobs everytime
+		StorageUtil.requestPermissions();
+		StorageUtil.copySpesificFileFromAssets('mobile/storageModes.txt', StorageUtil.getCustomStoragePath());
+		#end
+		Sys.setCwd(StorageUtil.getStorageDirectory());
+		#end
+		CrashHandler.init();
 		#if (cpp && windows)
 		untyped __cpp__("
 				SetProcessDPIAware(); // allows for more crisp visuals
@@ -70,7 +79,6 @@ class Main extends Sprite {
 				DisableProcessWindowsGhosting() // lets you move the window and such if it's not responding
 		");
 		#end
-		CrashHandler.init();
 		setupGame();
 	}
 
@@ -80,6 +88,7 @@ class Main extends Sprite {
 		return Type.getClassName(Type.getClass(FlxG.state)) == 'PlayState';
 
 	private function setupGame():Void {
+		#if (openfl <= "9.2.0")
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
@@ -90,11 +99,13 @@ class Main extends Sprite {
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		};
+		#end
 
 		ClientPrefs.loadDefaultStuff();
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 
-		final funkinGame:FlxGame = new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
+		final funkinGame:FlxGame = new FlxGame(game.width, game.height, #if (mobile && MODS_ALLOWED) CopyState.checkExistingFiles() ? game.initialState : CopyState #else game.initialState #end, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
+
 		// Literally just from Vanilla FNF but I implemented it my own way. -Torch
 		// torch is my friend btw :3 -moxie
 		@:privateAccess {

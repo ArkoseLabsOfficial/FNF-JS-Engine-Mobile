@@ -1,0 +1,68 @@
+{
+  "buttons": [
+    {
+      "button": "buttonV",
+      "buttonIDs": ["V"],
+      "graphic": "v",
+      "x": 770,
+      "y": 465,
+      "color": "0x49A9B2"
+    },
+    {
+      "button": "buttonX",
+      "buttonIDs": ["X"],
+      "graphic": "x",
+      "x": 896,
+      "y": 465,
+      "color": "0x99062D"
+    },
+    {
+      "button": "buttonY",
+      "buttonIDs": ["Y"],
+      "graphic": "y",
+      "x": 1022,
+      "y": 465,
+      "color": "0x4A35B9"
+    },
+    {
+      "button": "buttonZ",
+      "buttonIDs": ["Z"],
+      "graphic": "z",
+      "x": 1148,
+      "y": 465,
+      "color": "0xCCB98E"
+    },
+    {
+      "button": "buttonD",
+      "buttonIDs": ["D"],
+      "graphic": "d",
+      "x": 770,
+      "y": 585,
+      "color": "0x0078FF"
+    },
+    {
+      "button": "buttonC",
+      "buttonIDs": ["C"],
+      "graphic": "c",
+      "x": 896,
+      "y": 585,
+      "color": "0x44FF00"
+    },
+    {
+      "button": "buttonB",
+      "buttonIDs": ["B"],
+      "graphic": "b",
+      "x": 1022,
+      "y": 585,
+      "color": "0xFFCB00"
+    },
+    {
+      "button": "buttonA",
+      "buttonIDs": ["A"],
+      "graphic": "a",
+      "x": 1148,
+      "y": 585,
+      "color": "0xFF0000"
+    }
+  ]
+}

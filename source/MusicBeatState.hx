@@ -49,7 +49,13 @@ class MusicBeatState extends FlxUIState
 		super();
 	}
 
+	#if MOBILE_CONTROLS_ALLOWED
+	public var mobileManager:MobileControlManager;
+	#end
 	override function create() {
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager = new MobileControlManager(this);
+		#end
 		camBeat = FlxG.camera;
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();

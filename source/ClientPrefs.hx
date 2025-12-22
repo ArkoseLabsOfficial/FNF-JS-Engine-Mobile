@@ -5,6 +5,15 @@ import flixel.graphics.FlxGraphic;
 import flixel.input.keyboard.FlxKey;
 
 class ClientPrefs { //default settings if it can't find a save file containing your current settings
+	/* Mobile */
+	#if android public var storageType:String = "EXTERNAL_DATA"; #end
+	public static var mobileExtraKeys:Int = 2;
+	public static var hitboxhint:Bool = false;
+	public static var hitboxtype:String = 'Gradient';
+	public static var hitboxLocation:String = 'Bottom';
+	public static var hitboxmode:String = 'Normal (New)';
+	public static var mobileExtraKeyReturns:Array<String> = ['SHIFT', 'SPACE', 'Q', 'E'];
+
 	//Gameplay Settings
 	public static var controllerMode:Bool = false;
 	public static var downScroll:Bool = false;
