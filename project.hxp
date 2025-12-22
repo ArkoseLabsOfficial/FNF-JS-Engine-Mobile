@@ -107,6 +107,7 @@ class Project extends HXProject
 	// FEATURES
 	//
 	static final officialBuild:FeatureFlag = "officialBuild";
+	static final MOBILE_CONTROLS_ALLOWED:FeatureFlag = "MOBILE_CONTROLS_ALLOWED";
 	static final MODS_ALLOWED:FeatureFlag = "MODS_ALLOWED";
 	static final LUA_ALLOWED:FeatureFlag = "LUA_ALLOWED";
 	static final VIDEOS_ALLOWED:FeatureFlag = "VIDEOS_ALLOWED";
@@ -161,6 +162,16 @@ class Project extends HXProject
 		configureAssets();
 		configureIcons();
 		setupMobileThings();
+
+		if (isAndroid() && !isDebug())
+		{
+			// <certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug" />
+			keystore = new Keystore();
+			keystore.path = haxe.io.Path.join([Sys.getCwd(), "key.keystore"]);
+			keystore.alias = "psychport";
+			keystore.password = "psychengine";
+			keystore.aliasPassword = "psychengine";
+		}
 	}
 
 	function flair()
@@ -228,8 +239,13 @@ class Project extends HXProject
 		if (isMobile())
 		{
 			this.window.orientation = Orientation.LANDSCAPE;
-			this.window.fullscreen = false;
+			this.window.fullscreen = true;
 			this.window.resizable = false;
+
+			this.window.allowShaders = true;
+			this.window.requireShaders = true;
+			this.window.allowHighDPI = true;
+
 			this.window.width = 0;
 			this.window.height = 0;
 		}
@@ -336,6 +352,7 @@ class Project extends HXProject
 		// For example, `-DMODS_ALLOWED` or `-DVIDEOS_ALLOWED`
 
 		// Should be true unless explicitly requested.
+		MOBILE_CONTROLS_ALLOWED.apply(this, isMobile());
 		MODS_ALLOWED.apply(this, (isDesktop() || isMobile()) && !isWeb());
 		LUA_ALLOWED.apply(this, (isDesktop() || isMobile()) && (!isWeb() || !isHashLink()));
 		VIDEOS_ALLOWED.apply(this, (isDesktop() || isMobile()) && (!isWeb() || !is32Bit()));
@@ -441,10 +458,13 @@ class Project extends HXProject
 		addHaxelib('hxnativefiledialog');
 		addHaxelib('tjson');
 
+		if (MOBILE_CONTROLS_ALLOWED.isEnabled(this))
+			addHaxelib('mobile-controls');
+
 		if (isDesktop() && DISCORD_ALLOWED.isEnabled(this))
 			addHaxelib('hxdiscord_rpc'); // Discord API
 
-		if (isDesktop() && LUA_ALLOWED.isEnabled(this))
+		if ((isDesktop() || isMobile()) && LUA_ALLOWED.isEnabled(this))
 			addHaxelib('hxluajit'); // Lua API
 
 		if (isDebug() && isCPP())
@@ -453,7 +473,7 @@ class Project extends HXProject
 		if (isLinux() && !isDebug())
 			addHaxelib("hxgamemode");
 
-		if (isDesktop() && VIDEOS_ALLOWED.isEnabled(this))
+		if ((isDesktop() || isMobile()) && VIDEOS_ALLOWED.isEnabled(this))
 			addHaxelib('hxvlc');
 	}
 
@@ -523,6 +543,15 @@ class Project extends HXProject
 		// addAsset("art/readme.txt", "do NOT readme.txt", "art", shouldEmbedArt);
 		// addAsset("CHANGELOG.md", "changelog.txt", "/", shouldEmbedArt);
 		addAssetPath("example_mods", "mods", "default", ["*"], exclude, shouldEmbed); // lololololoolollo
+
+		if (MOBILE_CONTROLS_ALLOWED.isEnabled(this))
+		{
+			// <assets path="mobile/assets" rename="assets/mobile"/>
+			addAssetPath("mobile/assets", "assets/mobile", "default", ["*"], exclude, shouldEmbed);
+			// <assets path="mobile/storageModes.txt" rename="mobile/storageModes.txt"/>
+			addAsset("mobile/storageModes.txt", "mobile/storageModes.txt", "default", shouldEmbed);
+		info("Mobile Controls and storage assets included.");
+		}
 
 		if (isLinux() && !isDebug())
 			addAsset("gamemode.ini");
@@ -906,35 +935,6 @@ class Project extends HXProject
 		if (command != "display")
 		{
 			Log.info('[INFO] ${message}');
-		}
-	}
-
-	//Mobile
-	static final MOBILE_CONTROLS_ALLOWED:FeatureFlag = "MOBILE_CONTROLS_ALLOWED";
-	function setupMobileThings() {
-		if (isAndroid() && !isDebug())
-		{
-			// <certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug" />
-			keystore = new Keystore();
-			keystore.path = haxe.io.Path.join([Sys.getCwd(), "key.keystore"]);
-			keystore.alias = "psychport";
-			keystore.password = "psychengine";
-			keystore.aliasPassword = "psychengine";
-		}
-		addMobileAssets();
-	}
-	function addMobileAssets() {
-		var exclude = EXCLUDE_ASSETS.concat(isWeb() ? EXCLUDE_ASSETS_WEB : EXCLUDE_ASSETS_NATIVE);
-		var shouldEmbed = EMBED_ASSETS.isEnabled(this);
-		if (MOBILE_CONTROLS_ALLOWED.isEnabled(this))
-		{
-			// <assets path="mobile/assets" rename="assets/mobile"/>
-			addAssetPath("mobile/assets", "assets/mobile", "default", ["*"], exclude, shouldEmbed);
-			// <assets path="mobile/storageModes.txt" rename="mobile/storageModes.txt"/>
-			addAsset("mobile/storageModes.txt", "mobile/storageModes.txt", "default", shouldEmbed);
-			addHaxelib('mobile-controls');
-
-			info("Mobile Controls, storage and library assets included.");
 		}
 	}
 }
