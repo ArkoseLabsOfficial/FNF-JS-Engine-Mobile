@@ -1100,6 +1100,12 @@ class PlayState extends MusicBeatState
 		playerStrums = new FlxTypedGroup<StrumNote>();
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addHitbox();
+		mobileManager.hitbox?.onButtonDown?.add(onButtonPress);
+		mobileManager.hitbox?.onButtonUp?.add(onButtonRelease);
+		#end
+
 		trace ('Loading chart...');
 		generateSong(startOnTime);
 
@@ -6276,4 +6282,32 @@ class PlayState extends MusicBeatState
 
 		FlxG.autoPause = ClientPrefs.autoPause;
 	}
+
+	#if MOBILE_CONTROLS_ALLOWED
+	private function onButtonPress(button:MobileButton, ids:Array<String>, unique:Int):Void
+	{
+		if (ids.filter(id -> id.startsWith("NOTE")).length > 0 || ids.filter(id -> id.startsWith(Note.maniaKeys + "K_NOTE")).length > 0)
+		{
+			var buttonCode:Int = (unique == -1 ? 0 : unique);
+			trace(buttonCode);
+
+			callOnScripts('onButtonPressPre', [buttonCode]);
+			if (button.justPressed) keyPressed(buttonCode);
+			callOnScripts('onButtonPress', [buttonCode]);
+		}
+	}
+
+	private function onButtonRelease(button:MobileButton, ids:Array<String>, unique:Int):Void
+	{
+		if (ids.filter(id -> id.startsWith("NOTE")).length > 0 || ids.filter(id -> id.startsWith(Note.maniaKeys + "K_NOTE")).length > 0)
+		{
+			var buttonCode:Int = (unique == -1 ? 0 : unique);
+			trace(buttonCode);
+
+			callOnScripts('onButtonReleasePre', [buttonCode]);
+			if(buttonCode > -1) keyReleased(buttonCode);
+			callOnScripts('onButtonRelease', [buttonCode]);
+		}
+	}
+	#end
 }
