@@ -5,7 +5,6 @@ import openfl.display.BitmapData;
 import openfl.display.Shape;
 import openfl.geom.Matrix;
 import flixel.util.FlxColor;
-import objects.Note;
 
 class FunkinHitbox extends Hitbox {
 	public var currentMode:String;
@@ -140,9 +139,8 @@ class FunkinHitbox extends Hitbox {
 	{
 		var hint:MobileButton = new MobileButton(x, y, returned);
 		hint.loadGraphic(createHintGraphic(width, height, color));
-		var VSliceAllowed:Bool = (currentMode == 'V Slice' && Note.maniaKeys != 20 && Note.maniaKeys != 55);
 
-		if (showHints && !VSliceAllowed) {
+		if (showHints) {
 			var doHeightFix:Bool = false;
 			if (height == 144) doHeightFix = true;
 
@@ -168,17 +166,17 @@ class FunkinHitbox extends Hitbox {
 		hint.onDown.callback = function()
 		{
 			onButtonDown?.dispatch(hint, name, uniqueID);
-			if (hint.alpha != globalAlpha && !VSliceAllowed)
+			if (hint.alpha != globalAlpha)
 				hint.alpha = globalAlpha;
-			if ((hint.hintUp?.alpha != 0.00001 || hint.hintDown?.alpha != 0.00001) && hint.hintUp != null && hint.hintDown != null && !VSliceAllowed)
+			if ((hint.hintUp?.alpha != 0.00001 || hint.hintDown?.alpha != 0.00001) && hint.hintUp != null && hint.hintDown != null)
 				hint.hintUp.alpha = hint.hintDown.alpha = 0.00001;
 		}
 		hint.onOut.callback = hint.onUp.callback = function()
 		{
 			onButtonUp?.dispatch(hint, name, uniqueID);
-			if (hint.alpha != 0.00001 && !VSliceAllowed)
+			if (hint.alpha != 0.00001)
 				hint.alpha = 0.00001;
-			if ((hint.hintUp?.alpha != globalAlpha || hint.hintDown?.alpha != globalAlpha) && hint.hintUp != null && hint.hintDown != null && !VSliceAllowed)
+			if ((hint.hintUp?.alpha != globalAlpha || hint.hintDown?.alpha != globalAlpha) && hint.hintUp != null && hint.hintDown != null)
 				hint.hintUp.alpha = hint.hintDown.alpha = globalAlpha;
 		}
 		#if FLX_DEBUG

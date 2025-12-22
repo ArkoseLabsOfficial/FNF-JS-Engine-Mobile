@@ -58,7 +58,7 @@ class StorageUtil
 		var daPath:String = '';
 		#if android
 		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
-			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.data.storageType);
+			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.storageType);
 
 		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
 

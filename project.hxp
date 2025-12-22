@@ -360,7 +360,7 @@ class Project extends HXProject
 		CHECK_FOR_UPDATES.apply(this, true);
 		FEATURE_LOG_TRACE.apply(this, isDebug());
 		HSCRIPT_ALLOWED.apply(this, (isDesktop() || isMobile() || isWeb()));
-		DISCORD_ALLOWED.apply(this, (isDesktop() || isMobile()));
+		DISCORD_ALLOWED.apply(this, isDesktop());
 		SHADERS_ALLOWED.apply(this, true);
 		FUNNY_ALLOWED.apply(this, true);
 		// TITLE_SCREEN_EASTER_EGG.apply(this, true);
