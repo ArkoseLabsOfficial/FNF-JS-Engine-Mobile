@@ -2090,7 +2090,7 @@ class PlayState extends MusicBeatState
 			startedCountdown = true;
 			Conductor.songPosition = -Conductor.crochet * 5;
 			setOnLuas('startedCountdown', true);
-			callOnLuas('onCountdownStarted');
+			('onCountdownStarted');
 
 			var swagCounter:Int = 0;
 
@@ -6286,27 +6286,27 @@ class PlayState extends MusicBeatState
 	#if MOBILE_CONTROLS_ALLOWED
 	private function onButtonPress(button:MobileButton, ids:Array<String>, unique:Int):Void
 	{
-		if (ids.filter(id -> id.startsWith("NOTE")).length > 0 || ids.filter(id -> id.startsWith(Note.maniaKeys + "K_NOTE")).length > 0)
+		if (ids.filter(id -> id.startsWith("NOTE")).length > 0)
 		{
 			var buttonCode:Int = (unique == -1 ? 0 : unique);
 			trace(buttonCode);
 
-			callOnScripts('onButtonPressPre', [buttonCode]);
+			callOnLuas('onButtonPressPre', [buttonCode]);
 			if (button.justPressed) keyPressed(buttonCode);
-			callOnScripts('onButtonPress', [buttonCode]);
+			callOnLuas('onButtonPress', [buttonCode]);
 		}
 	}
 
 	private function onButtonRelease(button:MobileButton, ids:Array<String>, unique:Int):Void
 	{
-		if (ids.filter(id -> id.startsWith("NOTE")).length > 0 || ids.filter(id -> id.startsWith(Note.maniaKeys + "K_NOTE")).length > 0)
+		if (ids.filter(id -> id.startsWith("NOTE")).length > 0)
 		{
 			var buttonCode:Int = (unique == -1 ? 0 : unique);
 			trace(buttonCode);
 
-			callOnScripts('onButtonReleasePre', [buttonCode]);
+			callOnLuas('onButtonReleasePre', [buttonCode]);
 			if(buttonCode > -1) keyReleased(buttonCode);
-			callOnScripts('onButtonRelease', [buttonCode]);
+			callOnLuas('onButtonRelease', [buttonCode]);
 		}
 	}
 	#end
