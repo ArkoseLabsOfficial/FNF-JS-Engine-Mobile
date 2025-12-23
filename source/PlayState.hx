@@ -3268,7 +3268,7 @@ class PlayState extends MusicBeatState
 		}
 		if(botplayTxt != null && cpuControlled && !ClientPrefs.showcaseMode && !botplayUsed) botplayUsed = true;
 
-		if ((#if android FlxG.android.justReleased.BACK || #endcontrols.PAUSE) && startedCountdown && canPause && !heyStopTrying)
+		if ((#if android FlxG.android.justReleased.BACK || #end controls.PAUSE) && startedCountdown && canPause && !heyStopTrying)
 		{
 			final ret:Dynamic = callOnLuas('onPause', [], false);
 			if(ret != FunkinLua.Function_Stop)
