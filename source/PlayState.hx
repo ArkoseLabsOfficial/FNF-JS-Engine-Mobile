@@ -409,6 +409,7 @@ class PlayState extends MusicBeatState
 		FlxG.mouse.visible = false;
 		//Stops playing on a height that isn't divisible by 2
 		if (ClientPrefs.ffmpegMode && ClientPrefs.resolution != null) {
+			#if desktop
 			var resolutionValue = cast(ClientPrefs.resolution, String);
 
 			if (resolutionValue != null) {
@@ -426,6 +427,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
+			#end
 		}
 		if (ffmpegMode) {
 			if (unlockFPS)
@@ -2090,7 +2092,7 @@ class PlayState extends MusicBeatState
 			startedCountdown = true;
 			Conductor.songPosition = -Conductor.crochet * 5;
 			setOnLuas('startedCountdown', true);
-			('onCountdownStarted');
+			callOnLuas('onCountdownStarted');
 
 			var swagCounter:Int = 0;
 
