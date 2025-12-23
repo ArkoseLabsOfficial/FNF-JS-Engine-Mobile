@@ -39,7 +39,18 @@ jobs:
           unzip -qq android-ndk.zip
           echo "NDK r27c successfully downloaded and extracted!"
 
-      - name: Install Libraries
+      - name: Install Android Libraries
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get install libvlc-dev
+          sudo apt-get install libvlccore-dev
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          haxelib install hmm --quiet
+          haxelib run hmm install --quiet
+
+      - name: Install iOS Libraries
+        if: startsWith(matrix.os, 'macos')
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
@@ -51,6 +62,16 @@ jobs:
           haxelib run lime config ANDROID_NDK_ROOT ${{ runner.temp }}/android-ndk-r27c
           haxelib run lime config JAVA_HOME $JAVA_HOME_17_X64
           haxelib run lime config ANDROID_SETUP true
+
+       - name: Compile hxcpp
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          cd ~/haxelib/hxcpp/git/tools/run
+          haxe compile.hxml
+          cd ..
+          cd ./hxcpp
+          haxe compile.hxml
+          cd ../..
 
       - name: Compile (Android)
         if: startsWith(matrix.os, 'ubuntu')
