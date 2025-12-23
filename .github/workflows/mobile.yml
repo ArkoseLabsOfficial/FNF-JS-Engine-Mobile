@@ -63,7 +63,7 @@ jobs:
           haxelib run lime config JAVA_HOME $JAVA_HOME_17_X64
           haxelib run lime config ANDROID_SETUP true
 
-       - name: Compile hxcpp
+      - name: Compile hxcpp
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           cd ~/haxelib/hxcpp/git/tools/run
