@@ -46,17 +46,17 @@ jobs:
         run: |
           haxelib run lime rebuild hxcpp
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
-          haxelib run lime config ANDROID_NDK_ROOT ${{ runner.temp }}/android-ndk-r27c
-          haxelib run lime config JAVA_HOME $JAVA_HOME_17_X64
+          haxelib run lime config ANDROID_NDK_ROOT ${{ steps.setup-ndk.outputs.ndk-path }}
+          haxelib run lime config JAVA_HOME $JAVA_HOME
           haxelib run lime config ANDROID_SETUP true
 
       - name: Compile (Android)
         if: startsWith(matrix.os, 'ubuntu')
-        run: haxelib run lime build android -ONLY_ARM64 -final -D ${{ inputs.buildFlags }}
+        run: haxelib run lime build android -ONLY_ARM64 -D ${{ inputs.buildFlags }}
 
       - name: Compile (iOS)
         if: startsWith(matrix.os, 'macos')
-        run: haxelib run lime build ios -final -nosign -D ${{ inputs.buildFlags }}
+        run: haxelib run lime build ios -nosign -D ${{ inputs.buildFlags }}
 
       - name: Make Ipa
         if: startsWith(matrix.os, 'macos')
