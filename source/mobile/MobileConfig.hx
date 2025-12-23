@@ -25,29 +25,37 @@ class MobileConfig {
 	public static function init(saveName:String, savePath:String, mobilePath:String = 'mobile/', folders:Array<String>, modes:Array<ButtonsModes>)
 	{
 		save = new FlxSave();
+		trace('called');
 		save.bind(saveName, savePath);
 		if (mobilePath != null || mobilePath != '') mobileFolderPath = (mobilePath.endsWith('/') ? mobilePath : mobilePath + '/');
+		trace('called');
 
 		var intNumber:Int = -1;
 		for (i in folders) {
 			intNumber++;
 			switch (modes[intNumber]) {
 				case ACTION:
+					trace('called');
 					readDirectoryPart1(mobileFolderPath + i, actionModes, ACTION);
+					trace('called');
 					#if MODS_ALLOWED
 					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
 						readDirectoryPart1(Path.join([folder, 'ActionModes']), actionModes, ACTION);
 					}
 					#end
 				case DPAD:
+					trace('called');
 					readDirectoryPart1(mobileFolderPath + i, dpadModes, DPAD);
+					trace('called');
 					#if MODS_ALLOWED
 					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
 						readDirectoryPart1(Path.join([folder, 'DPadModes']), dpadModes, DPAD);
 					}
 					#end
 				case HITBOX:
+					trace('called');
 					readDirectoryPart1(mobileFolderPath + i, hitboxModes, HITBOX);
+					trace('called');
 					#if MODS_ALLOWED
 					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/Hitbox/')) {
 						readDirectoryPart1(Path.join([folder, 'HitboxModes']), hitboxModes, HITBOX);
@@ -96,10 +104,12 @@ class MobileConfig {
 	static function readDirectoryPart1(folder:String, map:Dynamic, mode:ButtonsModes)
 	{
 		folder = folder.contains(':') ? folder.split(':')[1] : folder;
+		trace(folder);
 
 		#if mobile_controls_file_support if (FileSystem.exists(folder)) #end
 		for (file in readDirectoryPart2(folder))
 		{
+			trace(file);
 			if (Path.extension(file) == 'json')
 			{
 				file = Path.join([folder, Path.withoutDirectory(file)]);
@@ -128,6 +138,7 @@ class MobileConfig {
 	static function readDirectoryPart2(directory:String):Array<String>
 	{
 		var dirs:Array<String> = [];
+		trace(directory);
 
 		#if mobile_controls_file_support
 		return FileSystem.readDirectory(directory);

@@ -104,6 +104,7 @@ class Main extends Sprite {
 		ClientPrefs.loadDefaultStuff();
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 
+		trace('called');
 		final funkinGame:FlxGame = new FlxGame(game.width, game.height, #if (mobile && MODS_ALLOWED) CopyState.checkExistingFiles() ? game.initialState : CopyState #else game.initialState #end, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
 
 		// Literally just from Vanilla FNF but I implemented it my own way. -Torch
@@ -114,7 +115,9 @@ class Main extends Sprite {
 			funkinGame._customSoundTray = objects.CustomSoundTray.CustomSoundTray;
 		}
 
+		trace('called');
 		addChild(funkinGame);
+		trace('called');
 
 		fpsVar = new FPSCounter(3, 3, 0x00FFFFFF);
 		addChild(fpsVar);
@@ -128,7 +131,9 @@ class Main extends Sprite {
 		#end
 
 		FlxG.autoPause = false;
+		trace('called');
 		#if android FlxG.android.preventDefaultKeys = [BACK]; #end
+		trace('called');
 
 		#if (linux || mac)
 		var icon = Image.fromFile("icon.png");

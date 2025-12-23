@@ -384,6 +384,9 @@ class Project extends HXProject
 		setHaxedef("lime_use_old_deltatime");
 		setHaxedef("lime_disable_motion_sensors");
 
+		//mobile-controls library
+    	setHaxedef("mobile_controls_file_support"); //you need this if you wanna access from files
+
 		// Enable OpenFL's error handler. Required for the crash logger.
 		setHaxedef("openfl-enable-handle-error");
 
