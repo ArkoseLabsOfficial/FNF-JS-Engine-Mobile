@@ -8,14 +8,6 @@ class MusicBeatSubstate extends FlxSubState
 	public static var instance:MusicBeatSubstate;
 	#if MOBILE_CONTROLS_ALLOWED
 	public var mobileManager:MobileControlManager;
-	override function destroy() {
-		super.destroy();
-		#if MOBILE_CONTROLS_ALLOWED
-		if (mobileManager != null) {
-			mobileManager.destroy();
-		}
-		#end
-	}
 	private function createMobileManager() {
 		if (mobileManager == null) mobileManager = new MobileControlManager(this);
 	}
@@ -30,6 +22,9 @@ class MusicBeatSubstate extends FlxSubState
 		super();
 	}
 	override function destroy() {
+		#if MOBILE_CONTROLS_ALLOWED
+		if (mobileManager != null) mobileManager.destroy();
+		#end
 		super.destroy();
 		instance = null;
 	}

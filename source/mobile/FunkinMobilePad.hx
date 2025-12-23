@@ -34,7 +34,7 @@ class FunkinMobilePad extends MobilePad {
 
 		button.immovable = true;
 		button.solid = button.moves = false;
-		button.antialiasing = ClientPrefs.antialiasing;
+		button.antialiasing = ClientPrefs.globalAntialiasing;
 		button.tag = framePath.toUpperCase();
 
 		if (ColorS != -1) button.color = ColorS;
