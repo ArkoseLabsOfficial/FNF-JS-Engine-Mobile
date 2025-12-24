@@ -20,7 +20,9 @@ class MusicBeatSubstate extends FlxSubState
 		super();
 		trace('called');
 		#if MOBILE_CONTROLS_ALLOWED
-		controls.isInSubstate = true;
+		try {
+			if (controls != null) controls.isInSubstate = true;
+		} catch(e:Dynamic) {}
 		trace('called');
 		createMobileManager();
 		trace('called');
