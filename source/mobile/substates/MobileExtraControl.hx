@@ -174,10 +174,10 @@ class MobileExtraControl extends MusicBeatSubstate
 		}
 		if (reset){
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			ClientPrefs.mobileExtraKeyReturns[0] = ClientPrefs.defaultData.extraKeyReturn1;
-			ClientPrefs.mobileExtraKeyReturns[1] = ClientPrefs.defaultData.extraKeyReturn2;
-			ClientPrefs.mobileExtraKeyReturns[2] = ClientPrefs.defaultData.extraKeyReturn3;
-			ClientPrefs.mobileExtraKeyReturns[3] = ClientPrefs.defaultData.extraKeyReturn4;
+			ClientPrefs.mobileExtraKeyReturns[0] = 'SHIFT';
+			ClientPrefs.mobileExtraKeyReturns[1] = 'SPACE';
+			ClientPrefs.mobileExtraKeyReturns[2] = 'Q';
+			ClientPrefs.mobileExtraKeyReturns[3] = 'E';
 			resetTitle();
 		}
 	}

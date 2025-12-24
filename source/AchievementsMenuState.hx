@@ -215,7 +215,7 @@ class AchievementsMenuState extends MusicBeatState
 				}
 			}
 
-			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.getButtonFromName('buttonC').pressed) #end)
+			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.getButtonFromName('buttonC').pressed #end)
 				&& (options[curSelected].unlocked || options[curSelected].curProgress > 0))
 			{
 				persistentUpdate = false;
