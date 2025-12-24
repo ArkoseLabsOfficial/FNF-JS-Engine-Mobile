@@ -441,7 +441,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	override function closeSubState() {
 		super.closeSubState();
-		instance = this;
+		MusicBeatSubstate.instance = this;
 		#if MOBILE_CONTROLS_ALLOWED
 		controls.isInSubstate = false;
 		mobileManager.removeMobilePad();
