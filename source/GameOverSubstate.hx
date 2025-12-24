@@ -128,6 +128,10 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 
 		super.create();
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('NONE', 'A_B');
+		#end
 	}
 
 	override function update(elapsed:Float)

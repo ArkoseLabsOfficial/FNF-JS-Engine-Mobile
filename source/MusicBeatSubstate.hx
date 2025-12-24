@@ -13,7 +13,9 @@ class MusicBeatSubstate extends FlxSubState
 	{
 		instance = this;
 		#if MOBILE_CONTROLS_ALLOWED
-		//controls.isInSubstate = true; //fuck you psych
+		try {
+			controls.isInSubstate = true; //fuck you psych
+		} catch(e:Dynamic) {}
 		mobileManager = new MobileControlManager(this);
 		#end
 		super();

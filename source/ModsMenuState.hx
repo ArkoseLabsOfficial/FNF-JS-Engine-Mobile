@@ -356,6 +356,10 @@ class ModsMenuState extends MusicBeatState
 		FlxG.mouse.visible = true;
 
 		super.create();
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad("UP_DOWN", "B");
+		#end
 	}
 
 	/*function getIntArray(max:Int):Array<Int>{

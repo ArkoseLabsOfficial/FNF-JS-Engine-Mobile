@@ -66,6 +66,9 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['Mobile Porters'],
+			['ArkoseLabs',	 'arkoselabs',	'Porter of JS Engine Mobile',					'https://youtube.com/@arkoselabsofficial',		'95240E'],
+			[''],
 			['JS Engine People'],
 			['Jordan Santiago',			'jor',				'Coded everything into JS Engine',								'https://twitter.com/JordansTweetsYT',			'FF9300'],
 			['Stinko',			'stinkern',				'Coder, a very stupid one..',								'https://stinkernn.carrd.co/',			'555555'],
@@ -162,6 +165,10 @@ class CreditsState extends MusicBeatState
 		changeSelection();
 
 		super.create();
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('UP_DOWN', 'A_B');
+		#end
 	}
 
 	var quitting:Bool = false;

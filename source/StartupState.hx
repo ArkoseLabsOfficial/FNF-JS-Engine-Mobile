@@ -80,7 +80,8 @@ class StartupState extends MusicBeatState
 		logo.active = true;
 		add(logo);
 
-		skipTxt = new FlxText(0, FlxG.height, 0, 'Press ENTER To Skip', 16);
+		var key_enter:String = #if MOBILE_CONTROLS_ALLOWED 'Touch SCREEN' #else 'Press ENTER' #end;
+		skipTxt = new FlxText(0, FlxG.height, 0, '${key_enter} To Skip', 16);
 		skipTxt.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
 		skipTxt.borderSize = 1.5;
 		skipTxt.antialiasing = true;
@@ -188,7 +189,8 @@ class StartupState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.keys.justPressed.ENTER) FlxG.switchState(TitleState.new);
+		if (FlxG.keys.justPressed.ENTER #if MOBILE_CONTROLS_ALLOWED || ScreenUtil.touch.justPressed #end)
+			FlxG.switchState(TitleState.new);
 		super.update(elapsed);
 	}
 }

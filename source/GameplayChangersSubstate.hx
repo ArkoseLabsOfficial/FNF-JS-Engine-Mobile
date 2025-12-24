@@ -231,6 +231,11 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		changeSelection();
 		reloadCheckboxes();
 
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('FULL', 'A_B_C');
+		mobileManager.addMobilePadCamera();
+		#end
+
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 
@@ -369,7 +374,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 					clearHold();
 				}
 			}
-			if(controls.RESET && FlxG.keys.pressed.SHIFT)
+			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.getButtonFromName('buttonC').justPressed #end) && FlxG.keys.pressed.SHIFT)
 			{
 				for (i in 0...optionsArray.length)
 				{
@@ -400,7 +405,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				reloadCheckboxes();
 			}
 
-			if(controls.RESET && !FlxG.keys.pressed.SHIFT)
+			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.getButtonFromName('buttonC').justPressed #end) && !FlxG.keys.pressed.SHIFT)
 			{
 				var leOption:GameplayOption = optionsArray[curSelected];
 				leOption.setValue(leOption.defaultValue);

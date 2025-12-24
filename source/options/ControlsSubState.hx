@@ -90,6 +90,10 @@ class ControlsSubState extends MusicBeatSubstate {
 		}
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 		changeSelection();
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('FULL', 'B');
+		#end
 	}
 
 	var leaving:Bool = false;

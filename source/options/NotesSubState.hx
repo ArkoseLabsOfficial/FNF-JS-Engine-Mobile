@@ -172,6 +172,27 @@ class NotesSubState extends MusicBeatSubstate
 		updateTip();
 
 		FlxG.mouse.visible = true;
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('NONE', 'B_C');
+		mobileManager.mobilePad.getButtonFromName('buttonB').x = FlxG.width - 132;
+		mobileManager.mobilePad.getButtonFromName('buttonC').x = 0;
+		mobileManager.mobilePad.getButtonFromName('buttonC').y = FlxG.height - 135;
+		#end
+	}
+
+	override function closeSubState() {
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.removeMobilePad();
+		#end
+		super.closeSubState();
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('NONE', 'B_C');
+		mobileManager.addMobilePadCamera();
+		mobileManager.mobilePad.getButtonFromName('buttonB').x = FlxG.width - 132;
+		mobileManager.mobilePad.getButtonFromName('buttonC').x = 0;
+		mobileManager.mobilePad.getButtonFromName('buttonC').y = FlxG.height - 135;
+		#end
 	}
 
 	function updateTip()
@@ -188,7 +209,7 @@ class NotesSubState extends MusicBeatSubstate
 		NUMPADSEVEN => '7', NUMPADEIGHT => '8', NUMPADNINE => '9', A => 'A', B => 'B', C => 'C', D => 'D', E => 'E', F => 'F'];
 
 	override function update(elapsed:Float) {
-		if (controls.BACK) {
+		if (controls.BACK #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad?.getButtonFromName('buttonB')?.justPressed #end) {
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			close();
@@ -418,7 +439,7 @@ class NotesSubState extends MusicBeatSubstate
 				}
 			}
 		}
-		else if(controls.RESET && hexTypeNum < 0)
+		else if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.getButtonFromName('buttonC').justPressed #end) && hexTypeNum < 0)
 		{
 			var colors:Array<FlxColor> = ClientPrefs.noteColorStyle != 'Quant-Based' ? !onPixel ? ClientPrefs.defaultArrowRGB[curSelectedNote] :
 			ClientPrefs.defaultPixelRGB[curSelectedNote] : ClientPrefs.defaultQuantRGB[curSelectedNote];

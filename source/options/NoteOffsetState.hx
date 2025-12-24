@@ -279,7 +279,7 @@ class NoteOffsetState extends MusicBeatState
 				}
 			}
 
-			if(controls.RESET)
+			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.getButtonFromName('buttonC').justPressed || #end controls.RESET)
 			{
 				for (i in 0...ClientPrefs.comboOffset.length)
 				{
@@ -317,7 +317,7 @@ class NoteOffsetState extends MusicBeatState
 				updateNoteDelay();
 			}
 
-			if(controls.RESET)
+			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.getButtonFromName('buttonC').justPressed || #end controls.RESET)
 			{
 				holdTime = 0;
 				barPercent = 0;
@@ -449,12 +449,33 @@ class NoteOffsetState extends MusicBeatState
 		timeTxt.visible = !onComboMenu;
 		beatText.visible = !onComboMenu;
 
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.removeMobilePad();
+
+		var str:String;
+		var str2:String;
+		if(onComboMenu) {
+			str = 'Combo Offset';
+			mobileManager.addMobilePad('NONE', 'A_B_C');
+			mobileManager.addMobilePadCamera();
+		} else {
+			str = 'Note/Beat Delay';
+			mobileManager.addMobilePad('FULL', 'A_B_C');
+			mobileManager.addMobilePadCamera();
+		}
+		if(controls.mobileControls)
+			str2 = '(Press A to Switch)';
+		else
+			str2 = '(Press Accept to Switch)';
+		changeModeText.text = '< ${str.toUpperCase()} ${str2.toUpperCase()} >';
+		#else
 		if(onComboMenu)
 			changeModeText.text = '< Combo Offset (Press Accept to Switch) >';
 		else
 			changeModeText.text = '< Note/Beat Delay (Press Accept to Switch) >';
 
 		changeModeText.text = changeModeText.text.toUpperCase();
+		#end
 		FlxG.mouse.visible = onComboMenu;
 	}
 }

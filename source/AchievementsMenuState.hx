@@ -134,6 +134,10 @@ class AchievementsMenuState extends MusicBeatState
 			add(i);
 
 		_changeSelection();
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad("FULL", "A_B_C");
+		mobileManager.addMobilePadCamera();
+		#end
 		super.create();
 
 		FlxG.camera.follow(camFollow, null, 9);
@@ -211,8 +215,10 @@ class AchievementsMenuState extends MusicBeatState
 				}
 			}
 
-			if(controls.RESET && (options[curSelected].unlocked || options[curSelected].curProgress > 0))
+			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.getButtonFromName('buttonC').pressed) #end)
+				&& (options[curSelected].unlocked || options[curSelected].curProgress > 0))
 			{
+				persistentUpdate = false;
 				openSubState(new ResetAchievementSubstate());
 			}
 		}
@@ -223,6 +229,15 @@ class AchievementsMenuState extends MusicBeatState
 			goingBack = true;
 		}
 		super.update(elapsed);
+	}
+
+	override function closeSubState() {
+		persistentUpdate = true;
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.removeMobilePad();
+		mobileManager.addMobilePad("FULL", "A_B_C");
+		#end
+		super.closeSubState();
 	}
 
 	public var barTween:FlxTween = null;
@@ -307,6 +322,10 @@ class ResetAchievementSubstate extends MusicBeatSubstate
 		noText.scrollFactor.set();
 		add(noText);
 		updateOptions();
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('LEFT_RIGHT', 'A_B');
+		#end
 	}
 
 	override function update(elapsed:Float)

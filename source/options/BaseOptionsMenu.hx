@@ -125,6 +125,11 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		searchText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK);
 		add(searchText);
 		FlxG.mouse.visible = true;
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad("FULL", "A_B_C");
+		mobileManager.addMobilePadCamera();
+		#end
 	}
 
 	public function addOption(option:Option) {
@@ -346,7 +351,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				}
 			}
 
-			if(controls.RESET)
+			if(controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.getButtonFromName('buttonC').justPressed #end)
 			{
 				if (!FlxG.keys.pressed.SHIFT)
 				{

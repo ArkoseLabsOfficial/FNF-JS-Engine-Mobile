@@ -12,7 +12,7 @@ class OptionsState extends MusicBeatState
 	var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 	var konamiCode = [];
 	var isEnteringKonamiCode:Bool = false;
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Optimization', 'Game Rendering', 'Visuals and UI', 'Gameplay', 'Misc'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Optimization', 'Game Rendering', 'Visuals and UI', 'Gameplay', 'Misc' #if MOBILE_CONTROLS_ALLOWED ,'Mobile' #end];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -23,6 +23,12 @@ class OptionsState extends MusicBeatState
 	private var otherCamera:FlxCamera;
 
 	function openSelectedSubstate(label:String) {
+		if (label != "Adjust Delay and Combo"){
+			#if MOBILE_CONTROLS_ALLOWED
+			mobileManager.removeMobilePad();
+			#end
+			persistentUpdate = false;
+		}
 		switch(label) {
 			case 'Note Colors':
 				if (!ClientPrefs.enableColorShader)
@@ -45,6 +51,10 @@ class OptionsState extends MusicBeatState
 				LoadingState.loadAndSwitchState(() -> new options.NoteOffsetState());
 			case 'Misc':
 				openSubState(new options.MiscSettingsSubState());
+			#if MOBILE_CONTROLS_ALLOWED
+			case 'Mobile':
+				openSubState(new mobile.options.MobileOptionsSubState());
+			#end
 		}
 	}
 
@@ -121,10 +131,23 @@ class OptionsState extends MusicBeatState
 		super.closeSubState();
 		ClientPrefs.saveSettings();
 		FlxG.mouse.visible = false;
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.removeMobilePad();
+		mobileManager.addMobilePad('UP_DOWN', 'A_B_E');
+		#end
+		persistentUpdate = true;
 	}
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
+
+		#if MOBILE_CONTROLS_ALLOWED
+		if (mobileManager.mobilePad.getButtonFromName('buttonE').justPressed) {
+			mobileManager.removeMobilePad();
+			persistentUpdate = false;
+			openSubState(new mobile.substates.MobileExtraControl());
+		}
+		#end
 
 		if (controls.UI_UP_P) {
 			changeSelection(-1);

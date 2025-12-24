@@ -60,6 +60,10 @@ class OutdatedState extends MusicBeatState
 			updateText.y = 710 - updateText.height;
 			updateText.x = 10;
 		add(updateText);
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad("NONE", "A_B");
+		#end
 	}
 
 	override function update(elapsed:Float)

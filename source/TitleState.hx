@@ -333,7 +333,7 @@ class TitleState extends MusicBeatState
   {
     if (FlxG.sound.music != null) Conductor.songPosition = FlxG.sound.music.time;
 
-    var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
+    var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT #if MOBILE_CONTROLS_ALLOWED || ScreenUtil.touch.justPressed #end;
 
     var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
