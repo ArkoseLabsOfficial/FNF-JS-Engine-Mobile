@@ -134,11 +134,11 @@ class AchievementsMenuState extends MusicBeatState
 			add(i);
 
 		_changeSelection();
+		super.create();
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.addMobilePad("FULL", "A_B_C");
 		mobileManager.addMobilePadCamera();
 		#end
-		super.create();
 
 		FlxG.camera.follow(camFollow, null, 9);
 		FlxG.camera.scroll.y = -FlxG.height;
