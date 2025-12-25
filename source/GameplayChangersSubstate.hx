@@ -245,7 +245,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			PlayState.instance.changeTheSettingsBitch();
 			inThePauseMenu = false;
 		}
-		PauseSubState.giveAccessBackToPauseState(); //give instance and other things to PauseSubstate back.
 	}
 
 	var nextAccept:Int = 5;

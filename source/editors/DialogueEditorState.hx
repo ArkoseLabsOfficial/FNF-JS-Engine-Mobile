@@ -364,12 +364,12 @@ class DialogueEditorState extends MusicBeatState
 			}
 			var negaMult:Array<Int> = [1, -1];
 			var controlAnim:Array<Bool> = [
-				FlxG.keys.justPressed.W || #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('UP') #end,
-				FlxG.keys.justPressed.S || #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('DOWN') #end
+				FlxG.keys.justPressed.W #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('UP') #end,
+				FlxG.keys.justPressed.S #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('DOWN') #end
 			];
 			var controlText:Array<Bool> = [
-				FlxG.keys.justPressed.D || #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('RIGHT') #end,
-				FlxG.keys.justPressed.A || #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('LEFT') #end
+				FlxG.keys.justPressed.D #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('RIGHT') #end,
+				FlxG.keys.justPressed.A #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('LEFT') #end
 			];
 			for (i in 0...controlAnim.length) {
 				if(controlAnim[i] && character.jsonFile.animations.length > 0) {
