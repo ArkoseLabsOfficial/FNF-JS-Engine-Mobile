@@ -359,6 +359,7 @@ class ModsMenuState extends MusicBeatState
 
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.addMobilePad("UP_DOWN", "B");
+		mobileManager.addMobilePadCamera();
 		#end
 	}
 

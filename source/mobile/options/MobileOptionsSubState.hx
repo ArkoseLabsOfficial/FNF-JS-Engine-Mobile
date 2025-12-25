@@ -22,6 +22,7 @@ class MobileOptionsSubState extends BaseOptionsMenu {
 		storageTypes = storageTypes.concat(externalPaths); //Get SD Card Path
 		#end
 
+		#if MOBILE_CONTROLS_ALLOWED
 		HitboxTypes = mergeAllTextsNamed('mobile/Hitbox/HitboxModes/hitboxModeList.txt');
 
 		option = new Option('MobilePad Opacity',
@@ -99,6 +100,7 @@ class MobileOptionsSubState extends BaseOptionsMenu {
 		option.changeValue = 0.1;
 		option.decimals = 1;
 		addOption(option);
+		#end
 
 		#if mobile
 		option = new Option('Wide Screen Mode',
@@ -137,6 +139,7 @@ class MobileOptionsSubState extends BaseOptionsMenu {
 		#end
 	}
 
+	#if MOBILE_CONTROLS_ALLOWED
 	inline public static function mergeAllTextsNamed(path:String, ?defaultDirectory:String = null, allowDuplicates:Bool = false)
 	{
 		if(defaultDirectory == null) defaultDirectory = Paths.getPreloadPath();
@@ -193,4 +196,5 @@ class MobileOptionsSubState extends BaseOptionsMenu {
 		#end
 		return foldersToCheck;
 	}
+	#end
 }

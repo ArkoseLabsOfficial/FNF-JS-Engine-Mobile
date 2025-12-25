@@ -126,7 +126,7 @@ class PauseSubState extends MusicBeatSubstate
 		super.create();
 
 		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager.addMobilePad('FULL', 'A');
+		mobileManager.addMobilePad('FULL_ALTER_2', 'A');
 		mobileManager.addMobilePadCamera();
 		#end
 	}
@@ -144,7 +144,6 @@ class PauseSubState extends MusicBeatSubstate
 		if (pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
 
-		super.update(elapsed);
 		if (menuItems != menuItemsExit && menuItems.contains('Skip Time')) updateSkipTextStuff();
 
 		if (controls.UI_UP_P)
@@ -155,6 +154,7 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
+		super.update(elapsed);
 
 		var daSelected:String = menuItems[curSelected];
 		switch (daSelected)
@@ -447,7 +447,7 @@ class PauseSubState extends MusicBeatSubstate
 		#if MOBILE_CONTROLS_ALLOWED
 		controls.isInSubstate = true;
 		mobileManager.removeMobilePad();
-		mobileManager.addMobilePad('FULL', 'A');
+		mobileManager.addMobilePad('FULL_ALTER_2', 'A');
 		mobileManager.addMobilePadCamera();
 		#end
 		persistentUpdate = true;

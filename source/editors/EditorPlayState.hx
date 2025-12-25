@@ -167,6 +167,8 @@ class EditorPlayState extends MusicBeatState
 		Paths.initDefaultSkin(PlayState.SONG.arrowSkin);
 		cachePopUpScore();
 
+		super.create();
+
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.addMobilePad('NONE', 'P_6');
 		mobileManager.addMobilePadCamera();
@@ -183,8 +185,6 @@ class EditorPlayState extends MusicBeatState
 				button.deadZones.push(mobileManager.mobilePad.getButtonFromName('button6'));
 		});
 		#end
-
-		super.create();
 	}
 
 	//var songScore:Int = 0;

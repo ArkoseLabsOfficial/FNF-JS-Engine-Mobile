@@ -232,7 +232,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		reloadCheckboxes();
 
 		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager.addMobilePad('FULL', 'A_B_C');
+		mobileManager.addMobilePad('FULL_ALTER', 'A_B_C');
 		mobileManager.addMobilePadCamera();
 		#end
 

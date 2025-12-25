@@ -223,7 +223,7 @@ class FreeplayState extends MusicBeatState
 		super.create();
 
 		#if MOBILE_CONTROLS_ALLOWED 
-		mobileManager.addMobilePad('FULL', 'A_B_C_X_Y_Z');
+		mobileManager.addMobilePad('FULL_ALTER_2', 'A_B_C_X_Y_Z');
 		#end
 	}
 
@@ -305,7 +305,7 @@ class FreeplayState extends MusicBeatState
 		super.closeSubState();
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.removeMobilePad();
-		mobileManager.addMobilePad('FULL', 'A_B_C_X_Y_Z');
+		mobileManager.addMobilePad('FULL_ALTER_2', 'A_B_C_X_Y_Z');
 		#end
 		persistentUpdate = true;
 	}

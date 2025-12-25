@@ -92,7 +92,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		changeSelection();
 
 		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager.addMobilePad('FULL', 'B');
+		mobileManager.addMobilePad('FULL_ALTER_2', 'B');
 		#end
 	}
 

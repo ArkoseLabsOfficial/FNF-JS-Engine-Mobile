@@ -210,7 +210,7 @@ class CharacterEditorState extends MusicBeatState
 		super.create();
 
 		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager.addMobilePad('FULL', 'CHARACTER_EDITOR');
+		mobileManager.addMobilePad('CHARACTER_EDITOR', 'CHARACTER_EDITOR');
 		mobileManager.addMobilePadCamera();
 		#end
 	}

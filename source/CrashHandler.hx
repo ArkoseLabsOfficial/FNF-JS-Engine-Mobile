@@ -240,8 +240,9 @@ class Crash extends MusicBeatState
 		ohNo3.x = 30;
 		add(ohNo3);
 
+		var screenShotShit:String = #if MOBILE_CONTROLS_ALLOWED '' #else ' Press [F2] to' #end;
 		var ohNo4:FlxText = new FlxText(0, 0, 1280,
-			"If you are reporting this bug, Press [F2] to screenshot that error or\nGo to crash/ folder and copy the contents from the recent file.");
+			'If you are reporting this bug,$screenShotShit screenshot that error or\nGo to crash/ folder and copy the contents from the recent file.');
 		ohNo4.setFormat(Paths.font('vcr.ttf'), 22, FlxColor.WHITE, FlxTextAlign.CENTER);
 		ohNo4.alpha = 0;
 		ohNo4.screenCenter();
@@ -264,7 +265,9 @@ class Crash extends MusicBeatState
 			add(crash[i]);
 		}
 
-		var tip:FlxText = new FlxText(180, 0, 1280, "Press any key to restart." + (CrashHandler.extraLines.length > 0 ? " (Press ENTER to Report This Bug)" : " You cannot report this issue."));
+		var buttonAny:String = #if MOBILE_CONTROLS_ALLOWED 'B' #else 'any key' #end;
+		var buttonEnter:String = #if MOBILE_CONTROLS_ALLOWED 'A' #else 'ENTER' #end;
+		var tip:FlxText = new FlxText(180, 0, 1280, 'Press $buttonAny to restart.' + (CrashHandler.extraLines.length > 0 ? ' (Press $buttonEnter to Report This Bug)' : " You cannot report this issue."));
 		tip.setFormat(Paths.font('vcr.ttf'), 36, FlxColor.WHITE, FlxTextAlign.CENTER);
 		tip.alpha = 0;
 		tip.screenCenter();
@@ -283,6 +286,10 @@ class Crash extends MusicBeatState
 		error.play();
 
 		super.create();
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('NONE', 'A_B');
+		#end
 	}
 
 	// Do note that if you use "resetGame" js engine will be in a crash loop because music is missing.
@@ -293,10 +300,10 @@ class Crash extends MusicBeatState
 	var clicked:Bool = false;
 
 	override public function update(elapsed:Float)
-		if (FlxG.keys.justPressed.ANY && !clicked)
+		if ((FlxG.keys.justPressed.ANY #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed(['A', 'B']) #end) && !clicked)
 		{
 			FlxTransitionableState.skipNextTransIn = false;
-			if (FlxG.keys.justPressed.ENTER && CrashHandler.extraLines.length < 1)
+			if ((FlxG.keys.justPressed.ENTER #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('A') #end) && CrashHandler.extraLines.length < 1)
 			{
 				clicked = true;
 				for (sprite in members)

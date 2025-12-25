@@ -585,7 +585,7 @@ class ChartingState extends MusicBeatState
 		super.create();
 
 		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager.addMobilePad('CHART_EDITOR', 'CHART_EDITOR');
+		mobileManager.addMobilePad('FULL_ALTER_2', 'CHART_EDITOR');
 		#end
 	}
 

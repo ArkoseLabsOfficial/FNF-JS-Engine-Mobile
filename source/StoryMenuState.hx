@@ -178,7 +178,7 @@ class StoryMenuState extends MusicBeatState
 		super.create();
 
 		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager.addMobilePad('FULL', 'A_B_X_Y');
+		mobileManager.addMobilePad('FULL_ALTER_2', 'A_B_X_Y');
 		#end
 	}
 
@@ -188,7 +188,7 @@ class StoryMenuState extends MusicBeatState
 		super.closeSubState();
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.removeMobilePad();
-		mobileManager.addMobilePad('FULL', 'A_B_X_Y');
+		mobileManager.addMobilePad('FULL_ALTER_2', 'A_B_X_Y');
 		#end
 	}
 
