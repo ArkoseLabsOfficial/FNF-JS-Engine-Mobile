@@ -70,7 +70,7 @@ class MasterEditorMenu extends MusicBeatState
 		super.create();
 
 		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager.addMobilePad("UP_DOWN", "A_B_LEFT_RIGHT");
+		mobileManager.addMobilePad("FULL_ALTER", "A_B");
 		mobileManager.addMobilePadCamera();
 		#end
 	}

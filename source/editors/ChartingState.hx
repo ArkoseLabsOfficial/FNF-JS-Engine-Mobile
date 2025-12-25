@@ -2556,7 +2556,7 @@ class ChartingState extends MusicBeatState
 		FlxG.watch.addQuick('daStep', curStep);
 
 		selectionEvent.visible = false;
-		if (mobile.MobileControls.enabled) {
+		#if MOBILE_CONTROLS_ALLOWED
 		for (touch in FlxG.touches.list)
 		{
 			if (touch.x > gridBG.x
@@ -2566,7 +2566,7 @@ class ChartingState extends MusicBeatState
 		{
 			selectionNote.visible = true;
 			selectionNote.x = Math.floor(touch.x / GRID_SIZE) * GRID_SIZE;
-			if (#if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonPressed('Y') #end)
+			if (mobileManager.mobilePad.buttonPressed('Y'))
 				selectionNote.y = touch.y;
 			else
 			{
@@ -2596,7 +2596,7 @@ class ChartingState extends MusicBeatState
 				{
 					if (touch.overlaps(note))
 					{
-						if (#if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonPressed('F') #end)
+						if (mobileManager.mobilePad.buttonPressed('F'))
 						{
 							selectNote(note);
 						}
@@ -2636,7 +2636,7 @@ class ChartingState extends MusicBeatState
 			}
 		}
 		}
-		} else {
+		#else
 		if (FlxG.mouse.x > gridBG.x
 			&& FlxG.mouse.x < gridBG.x + gridBG.width
 			&& FlxG.mouse.y > gridBG.y
@@ -2728,7 +2728,7 @@ class ChartingState extends MusicBeatState
 				else if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('click'));
 			}
 		}
-		}
+		#end
 
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {

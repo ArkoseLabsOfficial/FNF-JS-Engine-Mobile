@@ -127,7 +127,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		FlxG.mouse.visible = true;
 
 		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager.addMobilePad("FULL", "A_B_C");
+		mobileManager.addMobilePad("FULL_ALTER", "A_B_C");
 		mobileManager.addMobilePadCamera();
 		#end
 	}
