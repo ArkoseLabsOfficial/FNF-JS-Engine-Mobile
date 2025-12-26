@@ -1614,17 +1614,17 @@ class PlayState extends MusicBeatState
 	inline function set_polyphony(value:Float, which:Int):Float
 	{
 		switch (which) {
-		    case 0:
-		        polyphonyOppo = value;
-		        polyphonyBF = value;
-		    case 1:
-		        polyphonyOppo = value;
-		    case 2:
-		        polyphonyBF = value;
-		    // just in case, as an anti-crash prevention maybe?
-		    default:
+			case 0:
+				polyphonyOppo = value;
+				polyphonyBF = value;
+			case 1:
+				polyphonyOppo = value;
+			case 2:
+				polyphonyBF = value;
+			// just in case, as an anti-crash prevention maybe?
+			default:
 						polyphonyOppo = value;
-		        polyphonyBF = value;
+				polyphonyBF = value;
 		}
 		return value;
 	}
@@ -1835,7 +1835,7 @@ class PlayState extends MusicBeatState
 	}
 
 	/***************/
-  /*    VIDEO    */
+  /*	VIDEO	*/
 	/***************/
 	public var videoCutscene:VideoSprite = null;
 	public function startVideo(name:String, ?library:String = null, ?callback:Void->Void = null, forMidSong:Bool = false, canSkip:Bool = true, loop:Bool = false, playOnLoad:Bool = true)
@@ -2010,7 +2010,7 @@ class PlayState extends MusicBeatState
 		while (num >= 1000.0)
 		{
 			num /= 1000.0;
-      magnitude++;
+	  magnitude++;
 		}
 
 		// Determine which suffixes to use
@@ -6223,8 +6223,8 @@ class PlayState extends MusicBeatState
 
 		if(!FileSystem.exists(renderPath)) { //In case you delete the render folder/it doesn't exist
 			trace ('$renderPath folder not found! Creating the $renderPath folder...');
-      FileSystem.createDirectory(renderPath);
-    }
+	  FileSystem.createDirectory(renderPath);
+	}
 		else if (!FileSystem.isDirectory(renderPath)){
 				FileSystem.deleteFile(renderPath);
 				FileSystem.createDirectory(renderPath);
@@ -6235,8 +6235,8 @@ class PlayState extends MusicBeatState
 		var fileName = '$renderPath$prefixName';
 		if(FileSystem.exists(fileName + '.mp4')) {
 			trace ('Duplicate video found! Adding anti-dupe...');
-      fileName += '-' + DateUtils.cleanedDate;
-    }
+	  fileName += '-' + DateUtils.cleanedDate;
+	}
 
 		try{
 			process = new Process('ffmpeg', ['-v', 'quiet', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', lime.app.Application.current.window.width + 'x' + lime.app.Application.current.window.height, '-r', Std.string(targetFPS), '-i', '-', '-c:v', ClientPrefs.vidEncoder, '-b', Std.string(ClientPrefs.renderBitrate * 1000000), fileName + '.mp4']);
@@ -6373,4 +6373,122 @@ class PlayState extends MusicBeatState
 		mobileManager.removeHitbox();
 	}
 	#end
+
+	public function fixExtraKeysForMobile(keyCount:Dynamic, maniaChanges:Dynamic) {
+		unspawnNotes = [];
+		while(notes.length > 0) {
+			var daNote = notes.members[0];
+			daNote.active = false;
+			daNote.visible = false;
+
+			daNote.kill();
+			notes.remove(daNote, true);
+			daNote.destroy();
+		}
+		var startingKeyCount = keyCount;
+
+		//stupid shit with arrays
+		var maniaChangesString = '$maniaChanges';
+		var maniaChanges = maniaChangesString.split(':');
+		var maniaChangeMap = [];
+		for (i in maniaChanges) {
+			maniaChangeMap.push(i.split(','));
+		}
+
+		var stepCrochet:Float = 0.0;
+		var currentBPMLol:Float = Conductor.bpm;
+		var currentMultiplier:Float = 1;
+		var gottaHitNote:Bool = false;
+
+		for (section in PlayState.SONG.notes) //reload dat shit
+		{
+			if (section.changeBPM) currentBPMLol = section.bpm;
+			for (songNotes in section.sectionNotes)
+			{
+				var daStrumTime = songNotes[0];
+				if (daStrumTime >= Conductor.songPosition)
+				{
+					for (mchange in maniaChangeMap)
+					{
+						if (daStrumTime >= Std.parseFloat(mchange[0]))
+						{
+							keyCount = Std.parseInt(mchange[1]);
+						}
+					}
+					var actualNoteData = Std.int(songNotes[1] % keyCount);
+					var daNoteData = Std.int(songNotes[1] % startingKeyCount);
+
+					gottaHitNote = ((songNotes[1] < keyCount && !opponentChart)
+						|| (songNotes[1] > keyCount-1 && opponentChart) ? section.mustHitSection : !section.mustHitSection);
+
+					var swagNote:PreloadedChartNote = {
+						strumTime: daStrumTime,
+						noteData: daNoteData,
+						mustPress: (bothSides || gottaHitNote),
+						oppNote: (opponentChart ? gottaHitNote : !gottaHitNote),
+						noteType: songNotes[3],
+						animSuffix: (songNotes[3] == 'Alt Animation' || section.altAnim ? '-alt' : ''),
+						noteskin: (gottaHitNote ? bfNoteskin : dadNoteskin),
+						gfNote: (songNotes[3] == 'GF Sing' || (section.gfSection && songNotes[1] < 4)),
+						noAnimation: (songNotes[3] == 'No Animation'),
+						noMissAnimation: (songNotes[3] == 'No Animation'),
+						isSustainNote: false,
+						isSustainEnd: false,
+						parentST: 0,
+						sustainLength: songNotes[2],
+						hitHealth: 0.023,
+						missHealth: (songNotes[3] != 'Hurt Note' ? 0.0475 : 0.3),
+						wasHit: false,
+						hitCausesMiss: (songNotes[3] == 'Hurt Note'),
+						ignoreNote: (songNotes[3] == 'Hurt Note' && gottaHitNote),
+						multSpeed: 1,
+						multAlpha: 1,
+						noteDensity: currentMultiplier
+					};
+
+					if (swagNote.noteskin != '' && !Paths.noteSkinFramesMap.exists(swagNote.noteskin)) Paths.initNote(swagNote.noteskin);
+
+					unspawnNotes.push(swagNote);
+	
+					if (swagNote.sustainLength < 1) continue;
+
+					stepCrochet = 15000 / currentBPMLol;
+		
+					var roundSus:Int = Math.round(swagNote.sustainLength / stepCrochet);
+					var susNote = 0;
+					while (susNote <= roundSus) {
+						var sustainNote:PreloadedChartNote = {
+							strumTime: daStrumTime + (stepCrochet * susNote),
+							noteData: daNoteData,
+							mustPress: swagNote.mustPress,
+							oppNote: swagNote.oppNote,
+							noteType: swagNote.noteType,
+							animSuffix: swagNote.animSuffix,
+							noteskin: swagNote.noteskin,
+							gfNote: swagNote.gfNote,
+							noAnimation: swagNote.noAnimation,
+							isSustainNote: true,
+							isSustainEnd: (susNote == roundSus),
+							parentST: swagNote.strumTime,
+							parentSL: swagNote.sustainLength,
+							hitHealth: 0.023,
+							missHealth: (swagNote.noteType != 'Hurt Note' ? 0.0475 : 0.1),
+							wasHit: false,
+							multSpeed: 1,
+							multAlpha: 1,
+							noteDensity: currentMultiplier,
+							hitCausesMiss: swagNote.hitCausesMiss,
+							ignoreNote: (swagNote.hitCausesMiss && swagNote.mustPress)
+						};
+						unspawnNotes.push(sustainNote);
+						susNote++;
+					}
+				}
+			}
+		}
+		bfNoteskin = boyfriend.noteskin;
+		dadNoteskin = dad.noteskin;
+
+		unspawnNotes.sort(sortByTime);
+	}
 }

@@ -5,7 +5,7 @@
       "buttonIDs": ["UP"],
       "graphic": "up",
       "x": 0,
-      "y": 585,
+      "y": 345,
       "color": "0xFF12FA05"
     },
     {
@@ -13,7 +13,7 @@
       "buttonIDs": ["LEFT"],
       "graphic": "left",
       "x": 132,
-      "y": 585,
+      "y": 345,
       "color": "0xFFC24B99"
     },
     {
@@ -21,7 +21,7 @@
       "buttonIDs": ["RIGHT"],
       "graphic": "right",
       "x": 132,
-      "y": 705,
+      "y": 465,
       "color": "0xFFF9393F"
     },
     {
@@ -29,7 +29,7 @@
       "buttonIDs": ["DOWN"],
       "graphic": "down",
       "x": 0,
-      "y": 705,
+      "y": 465,
       "color": "0xFF00FFFF"
     }
   ]

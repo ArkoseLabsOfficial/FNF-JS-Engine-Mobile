@@ -6,6 +6,7 @@ import flixel.FlxBasic;
 class MusicBeatSubstate extends FlxSubState
 {
 	public static var instance:MusicBeatSubstate;
+	public static var subInstance:MusicBeatSubstate; //used for gameplay changers
 	#if MOBILE_CONTROLS_ALLOWED
 	public var mobileManager:MobileControlManager;
 	//makes code less messy & easier to write
@@ -21,21 +22,29 @@ class MusicBeatSubstate extends FlxSubState
 	#end
 	public function new()
 	{
-		instance = this;
+		if (controls.isInSubSubstate)
+			subInstance = this;
+		else
+			instance = this;
+
 		#if MOBILE_CONTROLS_ALLOWED
 		try {
-			controls.isInSubstate = true;
+			if (!controls.isInSubSubstate) controls.isInSubstate = true;
 		} catch(e:Dynamic) {}
 		mobileManager = new MobileControlManager(this);
 		#end
 		super();
 	}
 	override function destroy() {
-		instance = null; //setting it null can cause some problems which I want, so removed.
+		if (controls.isInSubSubstate)
+			subInstance = null;
+		else
+			instance = null;
+
 		#if MOBILE_CONTROLS_ALLOWED
 		if (mobileManager != null) mobileManager.destroy();
 		try {
-			if (!GameplayChangersSubstate.inThePauseMenu) controls.isInSubstate = false;
+			if (!controls.isInSubSubstate) controls.isInSubstate = false;
 		} catch(e:Dynamic) {}
 		#end
 		super.destroy();
@@ -93,20 +102,5 @@ class MusicBeatSubstate extends FlxSubState
 	public function beatHit():Void
 	{
 		//do literally nothing dumbass
-	}
-
-	//Gets the second substate (FlxG.state.subState.subState)
-	public static function getSubSubState():MusicBeatSubstate {
-		if (FlxG.state.subState != null) {
-			if (FlxG.state.subState.subState != null) {
-				var curSubState:Dynamic = FlxG.state.subState.subState;
-				var leState:MusicBeatSubstate = curSubState;
-				return leState;
-			}
-			else
-				return null;
-		}
-		else
-			return null;
 	}
 }

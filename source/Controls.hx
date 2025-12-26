@@ -765,6 +765,7 @@ class Controls extends FlxActionSet
 
 	#if MOBILE_CONTROLS_ALLOWED
 	public var isInSubstate:Bool = false; // don't worry about this it becomes true and false on it's own in MusicBeatSubstate
+	public var isInSubSubstate:Bool = false; // don't worry about this thing is not important
 	public var requestedInstance(get, default):Dynamic; // is set to MusicBeatState or MusicBeatSubstate when the constructor is called
 	public var requestedHitbox(get, default):FunkinHitbox; // for PlayState and EditorPlayState
 	public var mobileControls(get, never):Bool;
@@ -832,7 +833,9 @@ class Controls extends FlxActionSet
 	@:noCompletion
 	private function get_requestedInstance():Dynamic
 	{
-		if (isInSubstate)
+		if (isInSubSubstate)
+			return MusicBeatSubstate.subInstance;
+		else if (isInSubstate)
 			return MusicBeatSubstate.instance;
 		else
 			return MusicBeatState.getState();

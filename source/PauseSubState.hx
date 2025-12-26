@@ -257,6 +257,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.chartingMode = true;
 				case "Change Gameplay Settings":
 					persistentUpdate = false;
+					controls.isInSubSubstate = true;
 					openSubState(new GameplayChangersSubstate());
 					GameplayChangersSubstate.inThePauseMenu = true;
 				case 'Toggle Botplay':
@@ -443,9 +444,8 @@ class PauseSubState extends MusicBeatSubstate
 
 	override function closeSubState() {
 		super.closeSubState();
-		MusicBeatSubstate.instance = this;
 		#if MOBILE_CONTROLS_ALLOWED
-		controls.isInSubstate = true;
+		controls.isInSubSubstate = false;
 		mobileManager.removeMobilePad();
 		mobileManager.addMobilePad(PlayState.chartingMode ? 'FULL_ALTER_2' : 'UP_DOWN', 'A');
 		mobileManager.addMobilePadCamera();
