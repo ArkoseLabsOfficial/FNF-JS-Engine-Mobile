@@ -60,6 +60,9 @@ import haxe.Json;
 #if MOBILE_CONTROLS_ALLOWED
 import mobile.*;
 #end
+#if mobile
+import mobile.psychlua.Functions;
+#end
 #if android
 import android.callback.CallBack as AndroidCallBack;
 import android.content.Context as AndroidContext;

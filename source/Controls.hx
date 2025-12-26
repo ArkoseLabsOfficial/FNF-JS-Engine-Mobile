@@ -265,7 +265,7 @@ class Controls extends FlxActionSet
 	public var PAUSE(get, never):Bool;
 
 	inline function get_PAUSE()
-		return _pause.check();
+		return _pause.check() #if MOBILE_CONTROLS_ALLOWED || mobilePadJustPressed(['P']) #end;
 
 	public var RESET(get, never):Bool;
 
