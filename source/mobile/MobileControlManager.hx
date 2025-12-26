@@ -4,11 +4,10 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.util.FlxDestroyUtil;
-import mobile.JoyStick;
 
 /**
  * A simple mobile manager for who doesn't want to create these manually
- * if you're making big projects or have a experience to how controls work, create the controls yourself
+ * if you're making big projects or have a experience to how controls work, you can create your own manager
  */
 class MobileControlManager {
 	public var currentState:Dynamic;
@@ -16,7 +15,7 @@ class MobileControlManager {
 	public var mobilePad:FunkinMobilePad;
 	public var mobilePadCam:FlxCamera;
 	public var joyStickCam:FlxCamera;
-	public var joyStick:JoyStick;
+	public var joyStick:FunkinJoyStick;
 	public var hitboxCam:FlxCamera;
 	public var hitbox:FunkinHitbox;
 
@@ -98,7 +97,7 @@ class MobileControlManager {
 	public function makeJoyStick(?stickPath:String, x:Float, y:Float, radius:Float = 0, ease:Float = 0.25, size:Float = 1):Void
 	{
 		if (joyStick != null) removeJoyStick();
-		joyStick = new JoyStick(stickPath, x, y, radius, ease, size);
+		joyStick = new FunkinJoyStick(stickPath, x, y, radius, ease, size);
 	}
 
 	public function addJoyStick(?stickPath:String, x:Float, y:Float, radius:Float = 0, ease:Float = 0.25, size:Float = 1):Void

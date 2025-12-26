@@ -366,7 +366,7 @@ class MainMenuState extends MusicBeatState
 				}
 			}
 		#if (desktop || mobile)
-		else if (FlxG.keys.anyJustPressed(debugKeys) #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('E') #end) {
+		else if (FlxG.keys.anyJustPressed(debugKeys) #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('E') #end) {
 			FlxG.switchState(MasterEditorMenu.new);
 		}
 		#end

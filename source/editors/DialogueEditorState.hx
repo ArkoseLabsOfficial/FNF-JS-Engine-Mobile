@@ -353,10 +353,10 @@ class DialogueEditorState extends MusicBeatState
 			FlxG.sound.muteKeys = TitleState.muteKeys;
 			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('Y') || #end FlxG.keys.justPressed.SPACE) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('Y') || #end FlxG.keys.justPressed.SPACE) {
 				reloadText(false);
 			}
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('B') || #end FlxG.keys.justPressed.ESCAPE) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('B') || #end FlxG.keys.justPressed.ESCAPE) {
 				FlxG.switchState(editors.MasterEditorMenu.new);
 				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic), 1);
 				transitioning = true;
@@ -364,12 +364,12 @@ class DialogueEditorState extends MusicBeatState
 			}
 			var negaMult:Array<Int> = [1, -1];
 			var controlAnim:Array<Bool> = [
-				FlxG.keys.justPressed.W #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('UP') #end,
-				FlxG.keys.justPressed.S #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('DOWN') #end
+				FlxG.keys.justPressed.W #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('UP') #end,
+				FlxG.keys.justPressed.S #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('DOWN') #end
 			];
 			var controlText:Array<Bool> = [
-				FlxG.keys.justPressed.D #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('RIGHT') #end,
-				FlxG.keys.justPressed.A #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('LEFT') #end
+				FlxG.keys.justPressed.D #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('RIGHT') #end,
+				FlxG.keys.justPressed.A #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('LEFT') #end
 			];
 			for (i in 0...controlAnim.length) {
 				if(controlAnim[i] && character.jsonFile.animations.length > 0) {
@@ -389,7 +389,7 @@ class DialogueEditorState extends MusicBeatState
 				}
 			}
 
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('A') || #end FlxG.keys.justPressed.O) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('A') || #end FlxG.keys.justPressed.O) {
 				dialogueFile.dialogue.remove(dialogueFile.dialogue[curSelected]);
 				if(dialogueFile.dialogue.length < 1) //You deleted everything, dumbo!
 				{
@@ -398,7 +398,7 @@ class DialogueEditorState extends MusicBeatState
 					];
 				}
 				changeText();
-			} else if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('X') || #end FlxG.keys.justPressed.P) {
+			} else if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('X') || #end FlxG.keys.justPressed.P) {
 				dialogueFile.dialogue.insert(curSelected + 1, copyDefaultLine());
 				changeText(1);
 			}

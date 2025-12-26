@@ -438,7 +438,7 @@ class NotesSubState extends MusicBeatSubstate
 				}
 			}
 		}
-		else if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('C') #end) && hexTypeNum < 0)
+		else if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('C') #end) && hexTypeNum < 0)
 		{
 			var colors:Array<FlxColor> = ClientPrefs.noteColorStyle != 'Quant-Based' ? !onPixel ? ClientPrefs.defaultArrowRGB[curSelectedNote] :
 			ClientPrefs.defaultPixelRGB[curSelectedNote] : ClientPrefs.defaultQuantRGB[curSelectedNote];

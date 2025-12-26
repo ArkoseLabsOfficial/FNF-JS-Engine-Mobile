@@ -10,7 +10,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Gameplay Settings', 'Change Difficulty', 'Options', 'Exit'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', #if mobile 'Chart Editor', #end 'Change Gameplay Settings', 'Change Difficulty', 'Options', 'Exit'];
 	var menuItemsExit:Array<String> = [(PlayState.isStoryMode ? 'Exit to Story Menu' : 'Exit to Freeplay'), 'Exit to Main Menu', 'Exit Game', 'Back'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
@@ -143,6 +143,7 @@ class PauseSubState extends MusicBeatSubstate
 		cantUnpause -= elapsed;
 		if (pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
+		super.update(elapsed);
 
 		if (menuItems != menuItemsExit && menuItems.contains('Skip Time')) updateSkipTextStuff();
 
@@ -154,7 +155,6 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
-		super.update(elapsed);
 
 		var daSelected:String = menuItems[curSelected];
 		switch (daSelected)
@@ -444,11 +444,12 @@ class PauseSubState extends MusicBeatSubstate
 	override function closeSubState() {
 		super.closeSubState();
 		MusicBeatSubstate.instance = this;
-		persistentUpdate = true;
 		#if MOBILE_CONTROLS_ALLOWED
+		controls.isInSubstate = true;
 		mobileManager.removeMobilePad();
 		mobileManager.addMobilePad(PlayState.chartingMode ? 'FULL_ALTER_2' : 'UP_DOWN', 'A');
 		mobileManager.addMobilePadCamera();
 		#end
+		persistentUpdate = true;
 	}
 }

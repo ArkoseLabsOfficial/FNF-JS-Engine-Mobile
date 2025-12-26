@@ -939,6 +939,13 @@ class FunkinLua {
 		});
 
 		registerFunction("getPropertyFromClass", function(classVar:String, variable:String) {
+			//from Psych Online Mobile Port ;)
+			#if MOBILE_CONTROLS_ALLOWED
+			if (classVar == 'flixel.FlxG' && variable.startsWith('keys')) {
+				if (specialKeyCheck(variable, null, true) == true) return true;
+			}
+			#end
+
 			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
@@ -1373,14 +1380,26 @@ class FunkinLua {
 
 		registerFunction("keyboardJustPressed", function(name:String)
 		{
+			#if MOBILE_CONTROLS_ALLOWED
+			var check:Bool = specialKeyCheck(name, "justPressed");
+			if (check) return check;
+			#end
 			return Reflect.getProperty(FlxG.keys.justPressed, name);
 		});
 		registerFunction("keyboardPressed", function(name:String)
 		{
+			#if MOBILE_CONTROLS_ALLOWED
+			var check:Bool = specialKeyCheck(name, "pressed");
+			if (check) return check;
+			#end
 			return Reflect.getProperty(FlxG.keys.pressed, name);
 		});
 		registerFunction("keyboardReleased", function(name:String)
 		{
+			#if MOBILE_CONTROLS_ALLOWED
+			var check:Bool = specialKeyCheck(name, "justReleased");
+			if (check) return check;
+			#end
 			return Reflect.getProperty(FlxG.keys.justReleased, name);
 		});
 
@@ -1444,6 +1463,10 @@ class FunkinLua {
 		});
 
 		registerFunction("keyJustPressed", function(name:String) {
+			#if MOBILE_CONTROLS_ALLOWED
+			var check:Bool = specialKeyCheck(name, "justPressed");
+			if (check) return check;
+			#end
 			var key:Bool = false;
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_P');
@@ -1459,6 +1482,10 @@ class FunkinLua {
 			return key;
 		});
 		registerFunction("keyPressed", function(name:String) {
+			#if MOBILE_CONTROLS_ALLOWED
+			var check:Bool = specialKeyCheck(name, "pressed");
+			if (check) return check;
+			#end
 			var key:Bool = false;
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT');
@@ -1470,6 +1497,10 @@ class FunkinLua {
 			return key;
 		});
 		registerFunction("keyReleased", function(name:String) {
+			#if MOBILE_CONTROLS_ALLOWED
+			var check:Bool = specialKeyCheck(name, "justReleased");
+			if (check) return check;
+			#end
 			var key:Bool = false;
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_R');
@@ -2279,6 +2310,8 @@ class FunkinLua {
 		#if HSCRIPT_ALLOWED HScript.implement(this); #end
 		CustomSubstate.implement(this);
 		#if flxanimate FlxAnimateFunctions.implement(this); #end
+		#if mobile MobileFunctions.implement(this); #end
+		#if android AndroidFunctions.implement(this); #end
 
 		registerFunction("changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
 			#if DISCORD_ALLOWED
@@ -3343,6 +3376,48 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
+
+	#if MOBILE_CONTROLS_ALLOWED
+	public static function specialKeyCheck(key:String, ?type:String, ?alter:Bool):Dynamic
+	{
+		var textfix:Array<String> = key.trim().split('.');
+		var extraControl:Dynamic = null;
+		if (alter)
+		{
+			type = textfix[1].trim();
+			key = textfix[2].trim();
+		}
+
+		//Custom return thing
+		if (MusicBeatState.getState().mobileManager.hitbox != null) {
+			var hitbox:FunkinHitbox = MusicBeatState.getState().mobileManager.hitbox;
+			for (num in 0...hitbox.hints.length+1) {
+				var hitboxButton:Dynamic = hitbox.hints[num];
+				if (key.toUpperCase() == hitboxButton.returnedKey)
+					if (Reflect.getProperty(hitboxButton, type))
+						return true;
+			}
+		}
+
+		if (MusicBeatState.getState().mobileManager.mobilePad != null) {
+			var mobilePad:FunkinMobilePad = MusicBeatState.getState().mobileManager.mobilePad;
+			for (num in 0...mobilePad.dpads.length+1) {
+				var mobilePadButton:Dynamic = mobilePad.dpads[num];
+				if (key.toUpperCase() == mobilePadButton.returnedKey)
+					if (Reflect.getProperty(mobilePadButton, type))
+						return true;
+			}
+
+			for (num in 0...mobilePad.actions.length+1) {
+				var mobilePadButton:Dynamic = mobilePad.actions[num];
+				if (key.toUpperCase() == mobilePadButton.returnedKey)
+					if (Reflect.getProperty(mobilePadButton, type))
+						return true;
+			}
+		}
+		return false;
+	}
+	#end
 }
 typedef State = cpp.RawPointer<Lua_State>;
 // hi guys, my name is "secret"!

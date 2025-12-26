@@ -93,7 +93,7 @@ class MobileExtraControl extends MusicBeatSubstate
 		var up = controls.UI_UP_P;
 		var down = controls.UI_DOWN_P;
 		var back = controls.BACK;
-		var reset = controls.RESET || (mobileManager.mobilePad != null && mobileManager.mobilePad.buttonJustPressed('C'));
+		var reset = controls.RESET || (mobileManager.mobilePad != null && mobileButtonJustPressed('C'));
 
 		if (left || right){
 			if (isMain){

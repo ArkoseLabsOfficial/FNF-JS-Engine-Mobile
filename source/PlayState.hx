@@ -1106,10 +1106,18 @@ class PlayState extends MusicBeatState
 		super.create();
 
 		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager.addMobilePad('NONE', 'P');
+		mobileManager.addMobilePadCamera();
+
 		mobileManager.addHitbox(null, ClientPrefs.hitboxhint);
 		mobileManager.addHitboxCamera();
 		mobileManager.hitbox?.onButtonDown?.add(onButtonPress);
 		mobileManager.hitbox?.onButtonUp?.add(onButtonRelease);
+		mobileManager.hitbox.forEachAlive((button) ->
+		{
+			if (mobileManager.mobilePad.getButtonFromName('buttonP') != null)
+				button.deadZones.push(mobileManager.mobilePad.getButtonFromName('buttonP'));
+		});
 		#end
 
 		trace ('Loading chart...');

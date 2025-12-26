@@ -8,6 +8,16 @@ class MusicBeatSubstate extends FlxSubState
 	public static var instance:MusicBeatSubstate;
 	#if MOBILE_CONTROLS_ALLOWED
 	public var mobileManager:MobileControlManager;
+	//makes code less messy & easier to write
+	public inline function mobileButtonJustPressed(buttons:Dynamic):Bool {
+		return mobileManager.mobilePad.buttonJustPressed(buttons);
+	}
+	public inline function mobileButtonPressed(buttons:Dynamic):Bool {
+		return mobileManager.mobilePad.buttonPressed(buttons);
+	}
+	public inline function mobileButtonReleased(buttons:Dynamic):Bool {
+		return mobileManager.mobilePad.buttonJustReleased(buttons);
+	}
 	#end
 	public function new()
 	{

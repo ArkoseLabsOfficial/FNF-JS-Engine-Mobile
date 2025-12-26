@@ -351,7 +351,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				}
 			}
 
-			if(controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('C') #end)
+			if(controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('C') #end)
 			{
 				if (!FlxG.keys.pressed.SHIFT)
 				{

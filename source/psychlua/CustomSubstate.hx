@@ -99,4 +99,18 @@ class CustomSubstate extends MusicBeatSubstate
 		// PlayState.instance.setOnHScript('customSubstateName', name);
 		super.destroy();
 	}
+
+	public static function insertObject(?pos:Int = -1, tagObject:FlxObject)
+	{
+		if(instance != null)
+		{
+			if(tagObject != null)
+			{
+				if(pos < 0) instance.add(tagObject);
+				else instance.insert(pos, tagObject);
+				return true;
+			}
+		}
+		return false;
+	}
 }

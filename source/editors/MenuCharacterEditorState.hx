@@ -277,33 +277,33 @@ class MenuCharacterEditorState extends MusicBeatState
 			FlxG.sound.muteKeys = TitleState.muteKeys;
 			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('B') || #end FlxG.keys.justPressed.ESCAPE) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('B') || #end FlxG.keys.justPressed.ESCAPE) {
 				FlxG.switchState(editors.MasterEditorMenu.new);
 				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 				if (music != null && music.music != null) music.destroy();
 			}
 
 			var shiftMult:Int = 1;
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('Y') || #end FlxG.keys.pressed.SHIFT) shiftMult = 10;
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('Y') || #end FlxG.keys.pressed.SHIFT) shiftMult = 10;
 
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('LEFT') || #end FlxG.keys.justPressed.LEFT) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('LEFT') || #end FlxG.keys.justPressed.LEFT) {
 				characterFile.position[0] += shiftMult;
 				updateOffset();
 			}
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('RIGHT') || #end FlxG.keys.justPressed.RIGHT) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('RIGHT') || #end FlxG.keys.justPressed.RIGHT) {
 				characterFile.position[0] -= shiftMult;
 				updateOffset();
 			}
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('UP') || #end FlxG.keys.justPressed.UP) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('UP') || #end FlxG.keys.justPressed.UP) {
 				characterFile.position[1] += shiftMult;
 				updateOffset();
 			}
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('DOWN') || #end FlxG.keys.justPressed.DOWN) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('DOWN') || #end FlxG.keys.justPressed.DOWN) {
 				characterFile.position[1] -= shiftMult;
 				updateOffset();
 			}
 
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('X') || #end FlxG.keys.justPressed.SPACE && curTypeSelected == 1) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('X') || #end FlxG.keys.justPressed.SPACE && curTypeSelected == 1) {
 				grpWeekCharacters.members[curTypeSelected].animation.play('confirm', true);
 			}
 		}

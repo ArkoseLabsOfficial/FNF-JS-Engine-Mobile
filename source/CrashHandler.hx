@@ -300,10 +300,10 @@ class Crash extends MusicBeatState
 	var clicked:Bool = false;
 
 	override public function update(elapsed:Float)
-		if ((FlxG.keys.justPressed.ANY #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed(['A', 'B']) #end) && !clicked)
+		if ((FlxG.keys.justPressed.ANY #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed(['A', 'B']) #end) && !clicked)
 		{
 			FlxTransitionableState.skipNextTransIn = false;
-			if ((FlxG.keys.justPressed.ENTER #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('A') #end) && CrashHandler.extraLines.length < 1)
+			if ((FlxG.keys.justPressed.ENTER #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('A') #end) && CrashHandler.extraLines.length < 1)
 			{
 				clicked = true;
 				for (sprite in members)

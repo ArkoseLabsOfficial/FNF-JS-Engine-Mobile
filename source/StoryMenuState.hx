@@ -254,10 +254,10 @@ class StoryMenuState extends MusicBeatState
 			else if (upP || downP)
 				changeDifficulty();
 
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('X') || #end FlxG.keys.justPressed.CONTROL) {
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('X') || #end FlxG.keys.justPressed.CONTROL) {
 				persistentUpdate = false;
 				openSubState(new GameplayChangersSubstate());
-			} else if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('Y') || #end controls.RESET) {
+			} else if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('Y') || #end controls.RESET) {
 				persistentUpdate = false;
 				openSubState(new ResetScoreSubState('', curDifficulty, '', curWeek));
 				//FlxG.sound.play(Paths.sound('scrollMenu'));

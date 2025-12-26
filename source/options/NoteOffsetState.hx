@@ -279,7 +279,7 @@ class NoteOffsetState extends MusicBeatState
 				}
 			}
 
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('C') || #end controls.RESET)
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('C') || #end controls.RESET)
 			{
 				for (i in 0...ClientPrefs.comboOffset.length)
 				{
@@ -317,7 +317,7 @@ class NoteOffsetState extends MusicBeatState
 				updateNoteDelay();
 			}
 
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('C') || #end controls.RESET)
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('C') || #end controls.RESET)
 			{
 				holdTime = 0;
 				barPercent = 0;

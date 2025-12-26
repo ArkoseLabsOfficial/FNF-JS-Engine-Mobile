@@ -2566,7 +2566,7 @@ class ChartingState extends MusicBeatState
 		{
 			selectionNote.visible = true;
 			selectionNote.x = Math.floor(touch.x / GRID_SIZE) * GRID_SIZE;
-			if (mobileManager.mobilePad.buttonPressed('Y'))
+			if (mobileButtonPressed('Y'))
 				selectionNote.y = touch.y;
 			else
 			{
@@ -2596,7 +2596,7 @@ class ChartingState extends MusicBeatState
 				{
 					if (touch.overlaps(note))
 					{
-						if (mobileManager.mobilePad.buttonPressed('F'))
+						if (mobileButtonPressed('F'))
 						{
 							selectNote(note);
 						}
@@ -2770,7 +2770,7 @@ class ChartingState extends MusicBeatState
 
 		if (!blockInput)
 		{
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('C') || #end FlxG.keys.justPressed.ESCAPE)
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('C') || #end FlxG.keys.justPressed.ESCAPE)
 			{
 				saveLevel(true, true);
 				FlxG.sound.music.pause();
@@ -2779,7 +2779,7 @@ class ChartingState extends MusicBeatState
 				if (idleMusic != null && idleMusic.music != null) idleMusic.destroy();
 				FlxG.sound.music.onComplete = null; //So that it doesn't crash when you reach the end
 			}
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('A') || #end FlxG.keys.justPressed.ENTER)
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('A') || #end FlxG.keys.justPressed.ENTER)
 			{
 				if (CoolUtil.getNoteAmount(_song) <= 1000000) saveLevel(true, true);
 				FlxG.mouse.visible = false;
@@ -2797,18 +2797,18 @@ class ChartingState extends MusicBeatState
 			}
 
 			if(curSelectedNote != null && curSelectedNote[1] > -1) {
-				if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('DOWN2') || #end FlxG.keys.justPressed.E)
+				if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('DOWN2') || #end FlxG.keys.justPressed.E)
 				{
 					changeNoteSustain(Conductor.stepCrochet);
 				}
-				if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('UP2') || #end FlxG.keys.justPressed.Q)
+				if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('UP2') || #end FlxG.keys.justPressed.Q)
 				{
 					changeNoteSustain(-Conductor.stepCrochet);
 				}
 			}
 
 
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('B') || #end FlxG.keys.justPressed.BACKSPACE) {
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('B') || #end FlxG.keys.justPressed.BACKSPACE) {
 				if (!unsavedChanges)
 				{
 					// Protect against lost data when quickly leaving the chart editor.
@@ -2827,16 +2827,16 @@ class ChartingState extends MusicBeatState
 					function() FlxG.switchState(editors.MasterEditorMenu.new), null,ignoreWarnings));
 			}
 
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('Z') || #end (FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL)) {
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('Z') || #end (FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL)) {
 				undo();
 			}
 
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('V') || #end FlxG.keys.justPressed.Z && curZoom > 0 && !FlxG.keys.pressed.CONTROL) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('V') || #end FlxG.keys.justPressed.Z && curZoom > 0 && !FlxG.keys.pressed.CONTROL) {
 				--curZoom;
 				updateZoom();
 				updateGrid();
 			}
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('D') || #end FlxG.keys.justPressed.X && curZoom < zoomList.length-1) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('D') || #end FlxG.keys.justPressed.X && curZoom < zoomList.length-1) {
 				curZoom++;
 				updateZoom();
 				updateGrid();
@@ -2887,7 +2887,7 @@ class ChartingState extends MusicBeatState
 				}
 			}
 
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('X') || #end FlxG.keys.justPressed.SPACE)
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('X') || #end FlxG.keys.justPressed.SPACE)
 			{
 				if (FlxG.sound.music.playing)
 				{
@@ -2968,7 +2968,7 @@ class ChartingState extends MusicBeatState
 			}
 
 			if ((FlxG.keys.pressed.W || FlxG.keys.pressed.S)
-				#if MOBILE_CONTROLS_ALLOWED || (mobileManager.mobilePad.buttonPressed('UP') || mobileManager.mobilePad.buttonPressed('DOWN')) #end)
+				#if MOBILE_CONTROLS_ALLOWED || (mobileButtonPressed('UP') || mobileButtonPressed('DOWN')) #end)
 			{
 				if (idleMusic != null && idleMusic.music != null && idleMusicAllow) idleMusic.unpauseMusic(2);
 				resetBuddies();
@@ -2977,11 +2977,11 @@ class ChartingState extends MusicBeatState
 
 				var holdingShift:Float = 1;
 				if (FlxG.keys.pressed.CONTROL) holdingShift = 0.25;
-				else if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonPressed('Y') || #end FlxG.keys.pressed.SHIFT) holdingShift = 4;
+				else if (#if MOBILE_CONTROLS_ALLOWED mobileButtonPressed('Y') || #end FlxG.keys.pressed.SHIFT) holdingShift = 4;
 
 				var daTime:Float = 700 * FlxG.elapsed * holdingShift;
 
-				if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonPressed('UP') || #end FlxG.keys.pressed.W)
+				if (#if MOBILE_CONTROLS_ALLOWED mobileButtonPressed('UP') || #end FlxG.keys.pressed.W)
 				{
 					FlxG.sound.music.time -= daTime;
 				}
@@ -3014,7 +3014,7 @@ class ChartingState extends MusicBeatState
 
 			var style = currentType;
 
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonPressed('Y') || #end FlxG.keys.pressed.SHIFT){
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonPressed('Y') || #end FlxG.keys.pressed.SHIFT){
 				style = 3;
 			}
 
@@ -3106,10 +3106,10 @@ class ChartingState extends MusicBeatState
 				}
 			}
 			var shiftThing:Int = 1;
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonPressed('Y') || #end FlxG.keys.pressed.SHIFT)
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonPressed('Y') || #end FlxG.keys.pressed.SHIFT)
 				shiftThing = 4;
 
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('RIGHT') || #end FlxG.keys.justPressed.D) {
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('RIGHT') || #end FlxG.keys.justPressed.D) {
 				if (_song.notes[curSec + shiftThing] == null)
 				{
 					addSection(getSectionBeats());
@@ -3117,7 +3117,7 @@ class ChartingState extends MusicBeatState
 
 				changeSection(curSec + shiftThing);
 				}
-			if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('LEFT') || #end FlxG.keys.justPressed.A) {
+			if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('LEFT') || #end FlxG.keys.justPressed.A) {
 				if(curSec <= 0) {
 					changeSection(_song.notes.length-1);
 				} else {
@@ -3163,7 +3163,7 @@ class ChartingState extends MusicBeatState
 			playbackSpeed -= 0.01;
 		if (!holdingShift && pressedRB || holdingShift && holdingRB)
 			playbackSpeed += 0.01;
-		if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('G') || #end FlxG.keys.pressed.ALT && (pressedLB || pressedRB || holdingLB || holdingRB))
+		if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('G') || #end FlxG.keys.pressed.ALT && (pressedLB || pressedRB || holdingLB || holdingRB))
 			playbackSpeed = 1;
 		//
 

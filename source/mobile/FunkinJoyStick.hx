@@ -1,4 +1,4 @@
 package mobile;
 
 /* For easier understanding */
-typedef FunkinJoyStick = JoyStick;
+typedef FunkinJoyStick = mobile.JoyStick;

@@ -148,7 +148,7 @@ class OptionsState extends MusicBeatState
 		super.update(elapsed);
 
 		#if MOBILE_CONTROLS_ALLOWED
-		if (mobileManager.mobilePad.buttonJustPressed('E')) {
+		if (mobileButtonJustPressed('E')) {
 			mobileManager.removeMobilePad();
 			persistentUpdate = false;
 			openSubState(new mobile.substates.MobileExtraControl());

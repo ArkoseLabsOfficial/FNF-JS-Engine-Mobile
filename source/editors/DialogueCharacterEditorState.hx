@@ -537,7 +537,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			FlxG.sound.muteKeys = TitleState.muteKeys;
 			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
-			if((#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('A') || #end FlxG.keys.justPressed.SPACE) && UI_mainbox.selected_tab_id == 'Character') {
+			if((#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('A') || #end FlxG.keys.justPressed.SPACE) && UI_mainbox.selected_tab_id == 'Character') {
 				character.playAnim(character.jsonFile.animations[curAnim].anim);
 				daText.resetDialogue();
 				updateTextBox();
@@ -546,7 +546,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			//lots of Ifs lol get trolled
 			var offsetAdd:Int = 1;
 			var speed:Float = 300;
-			if(#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonPressed('Z') || #end FlxG.keys.pressed.SHIFT) {
+			if(#if MOBILE_CONTROLS_ALLOWED mobileButtonPressed('Z') || #end FlxG.keys.pressed.SHIFT) {
 				speed = 1200;
 				offsetAdd = 10;
 			}
@@ -569,16 +569,16 @@ class DialogueCharacterEditorState extends MusicBeatState
 				var moved:Bool = false;
 				var animShit:DialogueAnimArray = character.dialogueAnimations.get(curSelectedAnim);
 				var controlArrayLoop:Array<Bool> = [
-					FlxG.keys.justPressed.A #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('LEFT2') #end,
-					FlxG.keys.justPressed.W #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('UP2') #end,
-					FlxG.keys.justPressed.D #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('RIGHT2') #end,
-					FlxG.keys.justPressed.S #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('DOWN2') #end
+					FlxG.keys.justPressed.A #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('LEFT2') #end,
+					FlxG.keys.justPressed.W #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('UP2') #end,
+					FlxG.keys.justPressed.D #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('RIGHT2') #end,
+					FlxG.keys.justPressed.S #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('DOWN2') #end
 				];
 				var controlArrayIdle:Array<Bool> = [
-					FlxG.keys.justPressed.LEFT #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('LEFT') #end,
-					FlxG.keys.justPressed.UP #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('UP') #end,
-					FlxG.keys.justPressed.RIGHT #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('RIGHT') #end,
-					FlxG.keys.justPressed.DOWN #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('DOWN') #end
+					FlxG.keys.justPressed.LEFT #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('LEFT') #end,
+					FlxG.keys.justPressed.UP #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('UP') #end,
+					FlxG.keys.justPressed.RIGHT #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('RIGHT') #end,
+					FlxG.keys.justPressed.DOWN #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('DOWN') #end
 				];
 
 				for (i in 0...controlArrayLoop.length) {
@@ -608,7 +608,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 				camGame.zoom += elapsed * camGame.zoom;
 				if(camGame.zoom > 1) camGame.zoom = 1;
 			}
-			if(FlxG.keys.justPressed.H #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('Y') #end) {
+			if(FlxG.keys.justPressed.H #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('Y') #end) {
 				if(UI_mainbox.selected_tab_id == 'Animations') {
 					currentGhosts++;
 					if(currentGhosts > 2) currentGhosts = 0;
@@ -621,7 +621,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 					hudGroup.visible = !hudGroup.visible;
 				}
 			}
-			if(FlxG.keys.justPressed.R #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('X') #end) {
+			if(FlxG.keys.justPressed.R #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('X') #end) {
 				camGame.zoom = 1;
 				mainGroup.setPosition(0, 0);
 				hudGroup.visible = true;
@@ -692,7 +692,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 				}
 			}
 
-			if(FlxG.keys.justPressed.ESCAPE #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('B') #end) {
+			if(FlxG.keys.justPressed.ESCAPE #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('B') #end) {
 				FlxG.switchState(editors.MasterEditorMenu.new);
 				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic), 1);
 				transitioning = true;

@@ -374,7 +374,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 					clearHold();
 				}
 			}
-			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('C') #end) && FlxG.keys.pressed.SHIFT)
+			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('C') #end) && FlxG.keys.pressed.SHIFT)
 			{
 				for (i in 0...optionsArray.length)
 				{
@@ -405,7 +405,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				reloadCheckboxes();
 			}
 
-			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileManager.mobilePad.buttonJustPressed('C') #end) && !FlxG.keys.pressed.SHIFT)
+			if((controls.RESET #if MOBILE_CONTROLS_ALLOWED || mobileButtonJustPressed('C') #end) && !FlxG.keys.pressed.SHIFT)
 			{
 				var leOption:GameplayOption = optionsArray[curSelected];
 				leOption.setValue(leOption.defaultValue);

@@ -53,6 +53,10 @@ class InitState extends FlxState {
         Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		#if mobile
+		ScreenUtil.wideScreen.enabled = ClientPrefs.wideScreen;
+		#end
+
         final state:Class<FlxState> = (ClientPrefs.disableSplash) ? TitleState : StartupState;
 
         FlxG.switchState(Type.createInstance(state, []));

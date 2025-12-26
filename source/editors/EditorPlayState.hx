@@ -367,14 +367,14 @@ class EditorPlayState extends MusicBeatState
 	public var spawnTime:Float = 2000;
 	public var notesAddedCount:Int = 0;
 	override function update(elapsed:Float) {
-		if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('P') || #end FlxG.keys.justPressed.ESCAPE)
+		if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('P') || #end FlxG.keys.justPressed.ESCAPE)
 		{
 			FlxG.sound.music.pause();
 			vocals.pause();
 			opponentVocals.pause();
 			LoadingState.loadAndSwitchState(editors.ChartingState.new);
 		}
-		if (#if MOBILE_CONTROLS_ALLOWED mobileManager.mobilePad.buttonJustPressed('SIX') || #end FlxG.keys.justPressed.SIX)
+		if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('SIX') || #end FlxG.keys.justPressed.SIX)
 		{
 			cpuControlled = !cpuControlled;
 		}
