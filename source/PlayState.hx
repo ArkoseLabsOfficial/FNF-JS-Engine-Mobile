@@ -458,6 +458,20 @@ class PlayState extends MusicBeatState
 		// for lua
 		instance = this;
 
+		#if MOBILE_CONTROLS_ALLOWED
+		MobileConfig.init('MobileControls', CoolUtil.getSavePath(), 'assets/mobile/',
+			[
+				'MobilePad/DPadModes',
+				'MobilePad/ActionModes',
+				'Hitbox/HitboxModes',
+			], [
+				DPAD,
+				ACTION,
+				HITBOX
+			]
+		);
+		#end
+
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
 		PauseSubState.songName = null; //Reset to default
@@ -6374,7 +6388,7 @@ class PlayState extends MusicBeatState
 	}
 	#end
 
-	public function fixExtraKeysForMobile(keyCount:Float, maniaChanges:Dynamic) {
+	public function hardCodedExtraKeyForMobile(keyCount:Int, maniaChanges:Dynamic) {
 		unspawnNotes = [];
 		while(notes.length > 0) {
 			var daNote = notes.members[0];
@@ -6403,10 +6417,8 @@ class PlayState extends MusicBeatState
 		for (section in PlayState.SONG.notes) //reload dat shit
 		{
 			if (section.changeBPM) currentBPMLol = section.bpm;
-			for (i in 0...section.sectionNotes.length)
+			for (songNotes in section.sectionNotes)
 			{
-				final songNotes:Array<Dynamic> = section.sectionNotes[i];
-
 				var daStrumTime = songNotes[0];
 				if (daStrumTime >= Conductor.songPosition)
 				{
@@ -6426,7 +6438,7 @@ class PlayState extends MusicBeatState
 					var swagNote:PreloadedChartNote = {
 						strumTime: daStrumTime,
 						noteData: daNoteData,
-						mustPress: (bothSides || gottaHitNote),
+						mustPress: bothSides || gottaHitNote,
 						oppNote: (opponentChart ? gottaHitNote : !gottaHitNote),
 						noteType: songNotes[3],
 						animSuffix: (songNotes[3] == 'Alt Animation' || section.altAnim ? '-alt' : ''),

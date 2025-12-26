@@ -445,7 +445,6 @@ class PauseSubState extends MusicBeatSubstate
 	override function closeSubState() {
 		super.closeSubState();
 		#if MOBILE_CONTROLS_ALLOWED
-		controls.isInSubSubstate = false;
 		mobileManager.removeMobilePad();
 		mobileManager.addMobilePad(PlayState.chartingMode ? 'FULL_ALTER_2' : 'UP_DOWN', 'A');
 		mobileManager.addMobilePadCamera();

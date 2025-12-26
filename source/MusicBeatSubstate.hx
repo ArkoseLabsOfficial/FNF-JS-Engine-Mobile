@@ -23,6 +23,7 @@ class MusicBeatSubstate extends FlxSubState
 	public function new()
 	{
 		#if MOBILE_CONTROLS_ALLOWED
+		trace(controls.isInSubSubstate);
 		if (controls.isInSubSubstate)
 			subInstance = this;
 		else
@@ -39,8 +40,13 @@ class MusicBeatSubstate extends FlxSubState
 	}
 	override function destroy() {
 		#if MOBILE_CONTROLS_ALLOWED
-		if (controls.isInSubSubstate)
+		trace(controls.isInSubSubstate);
+		if (controls.isInSubSubstate) {
 			subInstance = null;
+			try {
+				controls.isInSubSubstate = false;
+			} catch(e:Dynamic) {}
+		}
 		else
 		#end
 			instance = null;
