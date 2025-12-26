@@ -775,7 +775,7 @@ class Controls extends FlxActionSet
 			if (keys != null && requestedInstance.mobileManager?.mobilePad != null)
 				if (requestedInstance.mobileManager.mobilePad.buttonPressed(keys) == true)
 					return true;
-		} catch(e:Dynamic {}
+		} catch(e:Dynamic) {}
 
 		return false;
 	}
@@ -786,7 +786,7 @@ class Controls extends FlxActionSet
 			if (keys != null && requestedInstance.mobileManager?.mobilePad != null)
 				if (requestedInstance.mobileManager.mobilePad.buttonJustPressed(keys) == true)
 						return true;
-		} catch(e:Dynamic {}
+		} catch(e:Dynamic) {}
 
 		return false;
 	}
@@ -797,7 +797,7 @@ class Controls extends FlxActionSet
 			if (keys != null && requestedInstance.mobileManager?.mobilePad != null)
 				if (requestedInstance.mobileManager.mobilePad.buttonJustReleased(keys) == true)
 					return true;
-		} catch(e:Dynamic {}
+		} catch(e:Dynamic) {}
 
 		return false;
 	}
