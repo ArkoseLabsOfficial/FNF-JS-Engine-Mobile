@@ -6374,7 +6374,7 @@ class PlayState extends MusicBeatState
 	}
 	#end
 
-	public function fixExtraKeysForMobile(keyCount:Dynamic, maniaChanges:Dynamic) {
+	public function fixExtraKeysForMobile(keyCount:Float, maniaChanges:Dynamic) {
 		unspawnNotes = [];
 		while(notes.length > 0) {
 			var daNote = notes.members[0];
@@ -6403,8 +6403,10 @@ class PlayState extends MusicBeatState
 		for (section in PlayState.SONG.notes) //reload dat shit
 		{
 			if (section.changeBPM) currentBPMLol = section.bpm;
-			for (songNotes in section.sectionNotes)
+			for (i in 0...section.sectionNotes.length)
 			{
+				final songNotes:Array<Dynamic> = section.sectionNotes[i];
+
 				var daStrumTime = songNotes[0];
 				if (daStrumTime >= Conductor.songPosition)
 				{
