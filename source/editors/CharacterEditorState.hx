@@ -1359,18 +1359,19 @@ class CharacterEditorState extends MusicBeatState
 				if(FlxG.camera.zoom < 0.1) FlxG.camera.zoom = 0.1;
 			}
 
-			if (FlxG.keys.pressed.I || FlxG.keys.pressed.J || FlxG.keys.pressed.K || FlxG.keys.pressed.L)
+			if (FlxG.keys.pressed.I || FlxG.keys.pressed.J || FlxG.keys.pressed.K || FlxG.keys.pressed.L
+				#if MOBILE_CONTROLS_ALLOWED || mobileButtonPressed('UP2') || mobileButtonPressed('DOWN2') || mobileButtonPressed('LEFT2') || mobileButtonPressed('RIGHT2') #end)
 			{
 				var addToCam:Float = 500 * elapsed * shiftMult;
 
-				if (FlxG.keys.pressed.I)
+				if (FlxG.keys.pressed.I #if MOBILE_CONTROLS_ALLOWED || mobileButtonPressed('UP2') #end)
 					camFollow.y -= addToCam;
-				else if (FlxG.keys.pressed.K)
+				else if (FlxG.keys.pressed.K #if MOBILE_CONTROLS_ALLOWED || mobileButtonPressed('DOWN2') #end)
 					camFollow.y += addToCam;
 
-				if (FlxG.keys.pressed.J)
+				if (FlxG.keys.pressed.J #if MOBILE_CONTROLS_ALLOWED || mobileButtonPressed('LEFT2') #end)
 					camFollow.x -= addToCam;
-				else if (FlxG.keys.pressed.L)
+				else if (FlxG.keys.pressed.L #if MOBILE_CONTROLS_ALLOWED || mobileButtonPressed('RIGHT2') #end)
 					camFollow.x += addToCam;
 			}
 

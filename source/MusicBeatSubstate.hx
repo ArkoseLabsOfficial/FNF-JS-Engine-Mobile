@@ -57,6 +57,7 @@ class MusicBeatSubstate extends FlxSubState
 		try {
 			if (!controls.isInSubSubstate) controls.isInSubstate = false;
 		} catch(e:Dynamic) {}
+		trace(controls.isInSubstate);
 		#end
 		super.destroy();
 	}

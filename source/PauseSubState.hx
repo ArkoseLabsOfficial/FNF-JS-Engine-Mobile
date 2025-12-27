@@ -256,7 +256,7 @@ class PauseSubState extends MusicBeatSubstate
 					MusicBeatState.windowNameSuffix = " - Chart Editor";
 					PlayState.chartingMode = true;
 				case "Change Gameplay Settings":
-					persistentUpdate = false;
+					mobileManager.mobilePad.active = false;
 					#if MOBILE_CONTROLS_ALLOWED controls.isInSubSubstate = true; #end
 					openSubState(new GameplayChangersSubstate());
 					GameplayChangersSubstate.inThePauseMenu = true;
@@ -446,11 +446,11 @@ class PauseSubState extends MusicBeatSubstate
 		super.closeSubState();
 		#if MOBILE_CONTROLS_ALLOWED
 		controls.isInSubSubstate = false;
+		mobileManager.mobilePad.active = true;
 		mobileManager.removeMobilePad();
 		mobileManager.addMobilePad(PlayState.chartingMode ? 'FULL_ALTER_2' : 'UP_DOWN', 'A');
 		mobileManager.addMobilePadCamera();
 		controls.isInSubSubstate = false;
 		#end
-		persistentUpdate = true;
 	}
 }
