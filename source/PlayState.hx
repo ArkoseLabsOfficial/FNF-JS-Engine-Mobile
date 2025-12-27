@@ -6367,24 +6367,47 @@ class PlayState extends MusicBeatState
 
 	public function addPlayStateHitbox(?mode:String)
 	{
-		mobileManager.addHitbox(mode, ClientPrefs.hitboxhint);
-		mobileManager.addHitboxCamera();
-		mobileManager.hitbox?.onButtonDown?.add(onButtonPress);
-		mobileManager.hitbox?.onButtonUp?.add(onButtonRelease);
-		mobileManager.hitbox.forEachAlive((button) ->
+		var manager = checkManager(managerName);
+		manager.addHitbox(mode, ClientPrefs.hitboxhint);
+		manager.addHitboxCamera();
+		connectControlToNotes(null, 'hitbox');
+		addHitboxDeadZone(null, ['buttonP']);
+	}
+
+	public function addHitboxDeadZone(?managerName:String, deadZoneButtons:Array<String>) {
+		var manager = checkManager(managerName);
+		manager.hitbox.forEachAlive((button) ->
 		{
-			if (mobileManager.mobilePad.getButtonFromName('buttonP') != null)
-				button.deadZones.push(mobileManager.mobilePad.getButtonFromName('buttonP'));
+			for (deadButton in deadZoneButtons) {
+				if (manager.mobilePad.getButtonFromName(deadButton) != null)
+					button.deadZones.push(manager.mobilePad.getButtonFromName(deadButton));
+			}
 		});
 	}
 
-	public function removePlayStateHitbox()
+	public function connectControlToNotes(?managerName:String, ?control:String) {
+		var manager = checkManager(managerName);
+		var currentControl:MobileButton;
+
+		if (control == 'mobilePad')
+			currentControl = manager.mobilePad;
+		else if {control == 'hitbox')
+			currentControl = manager.hitbox;
+
+		if (control == 'mobilePad' || control == 'hitbox') {
+			currentControl?.onButtonDown?.add(onButtonPress);
+			currentControl?.onButtonUp?.add(onButtonRelease);
+		}
+	}
+
+	public function removePlayStateHitbox(?managerName:String)
 	{
-		mobileManager.hitbox.forEachAlive((button) ->
+		var manager = checkManager(managerName);
+		manager.hitbox.forEachAlive((button) ->
 		{
 			button.deadZones = [];
 		});
-		mobileManager.removeHitbox();
+		manager.removeHitbox();
 	}
 	#end
 

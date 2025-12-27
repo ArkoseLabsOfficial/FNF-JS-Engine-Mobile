@@ -18,6 +18,11 @@ class MobileFunctions
 			PlayState.instance.createNewManager(name);
 		});
 
+		Convert.addCallback(lua, 'connectControlToNotes', function(?managerName:String, ?control:String):Void
+		{
+			PlayState.instance.connectControlToNotes(managerName, control);
+		});
+
 		//JoyStick
 		Convert.addCallback(lua, 'addJoyStick', function(?managerName:String, ?stickPath:String, x:Float, y:Float, radius:Float = 0, ease:Float = 0.25, size:Float = 1, ?addToCustomSubstate:Bool = false, ?posAtCustomSubstate:Int = -1):Void
 		{
@@ -78,9 +83,19 @@ class MobileFunctions
 			PlayState.checkManager(managerName).addHitboxCamera(defaultDrawTarget);
 		});
 
+		Convert.addCallback(lua, "addHitboxDeadZones", function(?managerName:String, buttons:Array<String>):Void
+		{
+			PlayState.instance.addHitboxDeadZone(managerName, buttons);
+		});
+
 		Convert.addCallback(lua, "removeHitbox", function(?managerName:String):Void
 		{
-			PlayState.checkManager(managerName).removeHitbox();
+			var manager = PlayState.checkManager(managerName);
+			manager.hitbox.forEachAlive((button) ->
+			{
+				if (button.deadZones != []) button.deadZones = [];
+			});
+			manager.removeHitbox();
 		});
 
 		Convert.addCallback(lua, 'hitboxPressed', function(?managerName:String, ?hint:String):Bool

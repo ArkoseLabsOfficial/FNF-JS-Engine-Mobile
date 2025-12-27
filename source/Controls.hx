@@ -833,10 +833,14 @@ class Controls extends FlxActionSet
 	@:noCompletion
 	private function get_requestedInstance():Dynamic
 	{
-		if (isInSubSubstate)
+		if (isInSubSubstate) {
+			trace('getting subInstance');
 			return MusicBeatSubstate.subInstance;
-		else if (isInSubstate)
+		}
+		else if (isInSubstate) {
+			trace('getting instance');
 			return MusicBeatSubstate.instance;
+		}
 		else
 			return MusicBeatState.getState();
 	}
