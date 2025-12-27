@@ -1120,7 +1120,7 @@ class PlayState extends MusicBeatState
 		super.create();
 
 		#if MOBILE_CONTROLS_ALLOWED
-		if (spaceVPose) mobileManager.addMobilePad('NONE', 'P_T');
+		if (ClientPrefs.spaceVPose) mobileManager.addMobilePad('NONE', 'P_T');
 		else mobileManager.addMobilePad('NONE', 'P');
 		mobileManager.addMobilePadCamera();
 		addPlayStateHitbox();

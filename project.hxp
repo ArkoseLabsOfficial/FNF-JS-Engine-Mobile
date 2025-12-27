@@ -37,7 +37,7 @@ class Project extends HXProject
 	/**
 	 * The game's name. Used as the default window title.
 	 */
-	static final TITLE:String = "Friday Night Funkin': JS Engine";
+	static var TITLE:String = "Friday Night Funkin': JS Engine";
 
 	/**
 	 * The name of the generated executable file.
@@ -191,6 +191,10 @@ class Project extends HXProject
 	 */
 	function configureApp()
 	{
+		//My signature mobile device names
+		if (isAndroid()) TITLE = "FNF': JS Engine";
+		else if (isIOS()) TITLE = "FNF JS Engine";
+
 		this.meta.title = TITLE;
 		this.meta.version = VERSION;
 		this.meta.packageName = PACKAGE_NAME;
