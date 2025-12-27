@@ -6367,9 +6367,8 @@ class PlayState extends MusicBeatState
 
 	public function addPlayStateHitbox(?mode:String)
 	{
-		var manager = checkManager(managerName);
-		manager.addHitbox(mode, ClientPrefs.hitboxhint);
-		manager.addHitboxCamera();
+		mobileManager.addHitbox(mode, ClientPrefs.hitboxhint);
+		mobileManager.addHitboxCamera();
 		connectControlToNotes(null, 'hitbox');
 		addHitboxDeadZone(null, ['buttonP']);
 	}
@@ -6400,14 +6399,13 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	public function removePlayStateHitbox(?managerName:String)
+	public function removePlayStateHitbox()
 	{
-		var manager = checkManager(managerName);
-		manager.hitbox.forEachAlive((button) ->
+		mobileManager.hitbox.forEachAlive((button) ->
 		{
 			button.deadZones = [];
 		});
-		manager.removeHitbox();
+		mobileManager.removeHitbox();
 	}
 	#end
 
