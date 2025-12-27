@@ -143,7 +143,6 @@ class PauseSubState extends MusicBeatSubstate
 		cantUnpause -= elapsed;
 		if (pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
-		super.update(elapsed);
 
 		if (menuItems != menuItemsExit && menuItems.contains('Skip Time')) updateSkipTextStuff();
 
@@ -155,6 +154,7 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
+		super.update(elapsed);
 
 		var daSelected:String = menuItems[curSelected];
 		switch (daSelected)
@@ -256,8 +256,9 @@ class PauseSubState extends MusicBeatSubstate
 					MusicBeatState.windowNameSuffix = " - Chart Editor";
 					PlayState.chartingMode = true;
 				case "Change Gameplay Settings":
-					mobileManager.mobilePad.active = false;
-					#if MOBILE_CONTROLS_ALLOWED controls.isInSubSubstate = true; #end
+					#if MOBILE_CONTROLS_ALLOWED
+					controls.isInSubSubstate = true;
+					#end
 					openSubState(new GameplayChangersSubstate());
 					GameplayChangersSubstate.inThePauseMenu = true;
 				case 'Toggle Botplay':
@@ -443,14 +444,11 @@ class PauseSubState extends MusicBeatSubstate
 	
 
 	override function closeSubState() {
-		super.closeSubState();
 		#if MOBILE_CONTROLS_ALLOWED
-		controls.isInSubSubstate = false;
-		mobileManager.mobilePad.active = true;
 		mobileManager.removeMobilePad();
 		mobileManager.addMobilePad(PlayState.chartingMode ? 'FULL_ALTER_2' : 'UP_DOWN', 'A');
 		mobileManager.addMobilePadCamera();
-		controls.isInSubSubstate = false;
 		#end
+		super.closeSubState();
 	}
 }

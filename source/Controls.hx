@@ -772,33 +772,27 @@ class Controls extends FlxActionSet
 
 	private function mobilePadPressed(keys:Array<String>):Bool
 	{
-		try {
-			if (keys != null && requestedInstance.mobileManager?.mobilePad != null)
-				if (requestedInstance.mobileManager.mobilePad.buttonPressed(keys) == true)
-					return true;
-		} catch(e:Dynamic) {}
+		if (keys != null && requestedInstance?.mobileManager?.mobilePad != null)
+			if (requestedInstance.mobileManager.mobilePad.buttonPressed(keys) == true)
+				return true;
 
 		return false;
 	}
 
 	private function mobilePadJustPressed(keys:Array<String>):Bool
 	{
-		try {
-			if (keys != null && requestedInstance.mobileManager?.mobilePad != null)
-				if (requestedInstance.mobileManager.mobilePad.buttonJustPressed(keys) == true)
-						return true;
-		} catch(e:Dynamic) {}
+		if (keys != null && requestedInstance?.mobileManager?.mobilePad != null)
+			if (requestedInstance.mobileManager.mobilePad.buttonJustPressed(keys) == true)
+				return true;
 
 		return false;
 	}
 
 	private function mobilePadJustReleased(keys:Array<String>):Bool
-	{   
-		try {
-			if (keys != null && requestedInstance.mobileManager?.mobilePad != null)
-				if (requestedInstance.mobileManager.mobilePad.buttonJustReleased(keys) == true)
-					return true;
-		} catch(e:Dynamic) {}
+	{
+		if (keys != null && requestedInstance?.mobileManager?.mobilePad != null)
+			if (requestedInstance.mobileManager.mobilePad.buttonJustReleased(keys) == true)
+				return true;
 
 		return false;
 	}
