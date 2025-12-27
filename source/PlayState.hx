@@ -6388,14 +6388,13 @@ class PlayState extends MusicBeatState
 		var manager = checkManager(managerName);
 		var currentControl:MobileButton;
 
-		if (control == 'mobilePad')
-			currentControl = manager.mobilePad;
-		else if (control == 'hitbox')
-			currentControl = manager.hitbox;
-
-		if (control == 'mobilePad' || control == 'hitbox') {
-			currentControl?.onButtonDown?.add(onButtonPress);
-			currentControl?.onButtonUp?.add(onButtonRelease);
+		switch(control) {
+			case 'mobilePad':
+				manager.mobilePad?.onButtonDown?.add(onButtonPress);
+				manager.mobilePad?.onButtonUp?.add(onButtonRelease);
+			case 'hitbox':
+				manager.hitbox?.onButtonDown?.add(onButtonPress);
+				manager.hitbox?.onButtonUp?.add(onButtonRelease);
 		}
 	}
 
