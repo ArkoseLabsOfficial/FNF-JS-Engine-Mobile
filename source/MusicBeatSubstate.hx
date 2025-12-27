@@ -43,21 +43,18 @@ class MusicBeatSubstate extends FlxSubState
 		trace(controls.isInSubSubstate);
 		if (controls.isInSubSubstate) {
 			subInstance = null;
-			try {
-				controls.isInSubSubstate = false;
-			} catch(e:Dynamic) {}
+			controls.isInSubSubstate = false;
 			trace(controls.isInSubSubstate);
 		}
-		else
-		#end
+		else {
+			if (mobileManager != null) mobileManager.destroy();
+			controls.isInSubstate = false;
 			instance = null;
-
-		#if MOBILE_CONTROLS_ALLOWED
-		if (mobileManager != null) mobileManager.destroy();
-		try {
-			if (!controls.isInSubSubstate) controls.isInSubstate = false;
-		} catch(e:Dynamic) {}
+		}
+		trace(controls.isInSubSubstate);
 		trace(controls.isInSubstate);
+		#else
+		instance = null;
 		#end
 		super.destroy();
 	}

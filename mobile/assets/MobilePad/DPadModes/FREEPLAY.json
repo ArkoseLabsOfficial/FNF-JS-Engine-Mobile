@@ -5,7 +5,7 @@
       "buttonIDs": ["UP"],
       "graphic": "up",
       "x": 0,
-      "y": 345,
+      "y": 465,
       "color": "0xFF12FA05"
     },
     {
@@ -21,7 +21,7 @@
       "buttonIDs": ["RIGHT"],
       "graphic": "right",
       "x": 1148,
-      "y": 465,
+      "y": 345,
       "color": "0xFFF9393F"
     },
     {

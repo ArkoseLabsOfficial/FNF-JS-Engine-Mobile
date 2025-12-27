@@ -4,7 +4,7 @@
       "button": "buttonUp2",
       "buttonIDs": ["UP2"],
       "graphic": "up",
-      "x": 561,
+      "x": 680,
       "y": 482,
       "scale": 0.95,
       "color": "0xFF12FA05"
@@ -13,7 +13,7 @@
       "button": "buttonDown2",
       "buttonIDs": ["DOWN2"],
       "graphic": "down",
-      "x": 561,
+      "x": 680,
       "y": 601,
       "scale": 0.95,
       "color": "0xFF00FFFF"
@@ -22,7 +22,7 @@
       "button": "buttonLeft2",
       "buttonIDs": ["LEFT2"],
       "graphic": "left",
-      "x": 680,
+      "x": 561,
       "y": 482,
       "scale": 0.95,
       "color": "0xFFC24B99"
@@ -31,7 +31,7 @@
       "button": "buttonRight2",
       "buttonIDs": ["RIGHT2"],
       "graphic": "right",
-      "x": 680,
+      "x": 561,
       "y": 601,
       "scale": 0.95,
       "color": "0xFFF9393F"
