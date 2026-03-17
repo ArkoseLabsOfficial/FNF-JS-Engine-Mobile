@@ -1,6 +1,6 @@
 package mobile;
 
-import lime.system.System as LimeSystem;
+import lime.utils.Assets as LimeAssets;
 import haxe.io.Path;
 import haxe.Exception;
 

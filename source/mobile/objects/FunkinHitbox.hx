@@ -5,7 +5,6 @@ import openfl.display.BitmapData;
 import openfl.display.Shape;
 import openfl.geom.Matrix;
 import flixel.util.FlxColor;
-import objects.Note;
 
 class FunkinHitbox extends Hitbox {
 	public var currentMode:String;
