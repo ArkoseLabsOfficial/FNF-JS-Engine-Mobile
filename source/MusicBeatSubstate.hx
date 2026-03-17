@@ -33,7 +33,6 @@ class MusicBeatSubstate extends FlxSubState
 		try {
 			if (!controls.isInSubSubstate) controls.isInSubstate = true;
 		} catch(e:Dynamic) {}
-		mobileManager = new MobileControlManager(this);
 		#end
 		super();
 	}
@@ -44,7 +43,6 @@ class MusicBeatSubstate extends FlxSubState
 			controls.isInSubSubstate = false;
 		}
 		else {
-			if (mobileManager != null) mobileManager.destroy();
 			controls.isInSubstate = false;
 			instance = null;
 		}
@@ -52,6 +50,13 @@ class MusicBeatSubstate extends FlxSubState
 		instance = null;
 		#end
 		super.destroy();
+	}
+	override function create() {
+		super.create();
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager = new MobileControlManager();
+		add(mobileManager);
+		#end
 	}
 
 	private var lastBeat:Float = 0;

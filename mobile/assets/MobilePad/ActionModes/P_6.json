@@ -1,20 +1,28 @@
 {
-  "buttons": [
-    {
-      "button": "buttonP",
-      "buttonIDs": ["P"],
-      "graphic": "p",
-      "x": 1156,
-      "y": 2,
-      "color": "0xE5DE00"
-    },
-    {
-      "button": "button6",
-      "buttonIDs": ["SIX"],
-      "graphic": "6",
-      "x": 1032,
-      "y": 2,
-      "color": "0x34bfd1"
-    }
-  ]
+	"buttons": [
+		{
+			"button": "buttonP",
+			"buttonIDs": [
+				"P"
+			],
+			"graphic": "p",
+			"color": "0xE5DE00",
+			"position": [
+				1156,
+				2
+			]
+		},
+		{
+			"button": "button6",
+			"buttonIDs": [
+				"SIX"
+			],
+			"graphic": "6",
+			"color": "0x34bfd1",
+			"position": [
+				1032,
+				2
+			]
+		}
+	]
 }

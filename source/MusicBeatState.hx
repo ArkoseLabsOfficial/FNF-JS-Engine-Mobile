@@ -47,9 +47,6 @@ class MusicBeatState extends FlxUIState
 	// this is just because FlxUIState has arguments in it's constructor
 	public function new() {
 		super();
-		#if MOBILE_CONTROLS_ALLOWED
-		mobileManager = new MobileControlManager(this);
-		#end
 	}
 
 	#if MOBILE_CONTROLS_ALLOWED
@@ -65,7 +62,6 @@ class MusicBeatState extends FlxUIState
 		return mobileManager.mobilePad.justReleased(buttons);
 	}
 	override function destroy() {
-		if (mobileManager != null) mobileManager.destroy();
 		super.destroy();
 	}
 	#end
@@ -85,6 +81,11 @@ class MusicBeatState extends FlxUIState
 		catch(e) {}
 
 		Application.current.window.title = windowNamePrefix + windowNameSuffix + windowNameSuffix2;
+
+		#if MOBILE_CONTROLS_ALLOWED
+		mobileManager = new MobileControlManager();
+		add(mobileManager);
+		#end
 	}
 
 	public function initPsychCamera():PsychCamera

@@ -1,121 +1,173 @@
 {
-  "buttons": [
-    {
-      "button": "buttonUp2",
-      "buttonIDs": ["UP2"],
-      "graphic": "up",
-      "x": 680,
-      "y": 482,
-      "scale": 0.95,
-      "color": "0xFF12FA05"
-    },
-    {
-      "button": "buttonDown2",
-      "buttonIDs": ["DOWN2"],
-      "graphic": "down",
-      "x": 680,
-      "y": 601,
-      "scale": 0.95,
-      "color": "0xFF00FFFF"
-    },
-    {
-      "button": "buttonLeft2",
-      "buttonIDs": ["LEFT2"],
-      "graphic": "left",
-      "x": 561,
-      "y": 482,
-      "scale": 0.95,
-      "color": "0xFFC24B99"
-    },
-    {
-      "button": "buttonRight2",
-      "buttonIDs": ["RIGHT2"],
-      "graphic": "right",
-      "x": 561,
-      "y": 601,
-      "scale": 0.95,
-      "color": "0xFFF9393F"
-    },
-    {
-      "button": "buttonV",
-      "buttonIDs": ["V"],
-      "graphic": "v",
-      "x": 799,
-      "y": 482,
-      "scale": 0.95,
-      "color": "0x49A9B2"
-    },
-    {
-      "button": "buttonD",
-      "buttonIDs": ["D"],
-      "graphic": "d",
-      "x": 799,
-      "y": 601,
-      "scale": 0.95,
-      "color": "0x0078FF"
-    },
-    {
-      "button": "buttonX",
-      "buttonIDs": ["X"],
-      "graphic": "x",
-      "x": 918,
-      "y": 482,
-      "scale": 0.95,
-      "color": "0x99062D"
-    },
-    {
-      "button": "buttonC",
-      "buttonIDs": ["C"],
-      "graphic": "c",
-      "x": 918,
-      "y": 601,
-      "scale": 0.95,
-      "color": "0x44FF00"
-    },
-    {
-      "button": "buttonY",
-      "buttonIDs": ["Y"],
-      "graphic": "y",
-      "x": 1037,
-      "y": 482,
-      "scale": 0.95,
-      "color": "0x4A35B9"
-    },
-    {
-      "button": "buttonB",
-      "buttonIDs": ["B"],
-      "graphic": "b",
-      "x": 1037,
-      "y": 601,
-      "scale": 0.95,
-      "color": "0xFFCB00"
-    },
-    {
-      "button": "buttonZ",
-      "buttonIDs": ["Z"],
-      "graphic": "z",
-      "x": 1156,
-      "y": 482,
-      "scale": 0.95,
-      "color": "0xCCB98E"
-    },
-    {
-      "button": "buttonA",
-      "buttonIDs": ["A"],
-      "graphic": "a",
-      "x": 1156,
-      "y": 601,
-      "scale": 0.95,
-      "color": "0xFF0000"
-    },
-    {
-      "button": "buttonF",
-      "buttonIDs": ["F"],
-      "graphic": "f",
-      "x": 900,
-      "y": 45,
-      "scale": 0.8,
-      "color": "0xFF009D"
-    }
-  ]
+	"buttons": [
+		{
+			"button": "buttonUp2",
+			"buttonIDs": [
+				"UP2"
+			],
+			"graphic": "up",
+			"scale": 0.95,
+			"color": "0xFF12FA05",
+			"position": [
+				680,
+				482
+			]
+		},
+		{
+			"button": "buttonDown2",
+			"buttonIDs": [
+				"DOWN2"
+			],
+			"graphic": "down",
+			"scale": 0.95,
+			"color": "0xFF00FFFF",
+			"position": [
+				680,
+				601
+			]
+		},
+		{
+			"button": "buttonLeft2",
+			"buttonIDs": [
+				"LEFT2"
+			],
+			"graphic": "left",
+			"scale": 0.95,
+			"color": "0xFFC24B99",
+			"position": [
+				561,
+				482
+			]
+		},
+		{
+			"button": "buttonRight2",
+			"buttonIDs": [
+				"RIGHT2"
+			],
+			"graphic": "right",
+			"scale": 0.95,
+			"color": "0xFFF9393F",
+			"position": [
+				561,
+				601
+			]
+		},
+		{
+			"button": "buttonV",
+			"buttonIDs": [
+				"V"
+			],
+			"graphic": "v",
+			"scale": 0.95,
+			"color": "0x49A9B2",
+			"position": [
+				799,
+				482
+			]
+		},
+		{
+			"button": "buttonD",
+			"buttonIDs": [
+				"D"
+			],
+			"graphic": "d",
+			"scale": 0.95,
+			"color": "0x0078FF",
+			"position": [
+				799,
+				601
+			]
+		},
+		{
+			"button": "buttonX",
+			"buttonIDs": [
+				"X"
+			],
+			"graphic": "x",
+			"scale": 0.95,
+			"color": "0x99062D",
+			"position": [
+				918,
+				482
+			]
+		},
+		{
+			"button": "buttonC",
+			"buttonIDs": [
+				"C"
+			],
+			"graphic": "c",
+			"scale": 0.95,
+			"color": "0x44FF00",
+			"position": [
+				918,
+				601
+			]
+		},
+		{
+			"button": "buttonY",
+			"buttonIDs": [
+				"Y"
+			],
+			"graphic": "y",
+			"scale": 0.95,
+			"color": "0x4A35B9",
+			"position": [
+				1037,
+				482
+			]
+		},
+		{
+			"button": "buttonB",
+			"buttonIDs": [
+				"B"
+			],
+			"graphic": "b",
+			"scale": 0.95,
+			"color": "0xFFCB00",
+			"position": [
+				1037,
+				601
+			]
+		},
+		{
+			"button": "buttonZ",
+			"buttonIDs": [
+				"Z"
+			],
+			"graphic": "z",
+			"scale": 0.95,
+			"color": "0xCCB98E",
+			"position": [
+				1156,
+				482
+			]
+		},
+		{
+			"button": "buttonA",
+			"buttonIDs": [
+				"A"
+			],
+			"graphic": "a",
+			"scale": 0.95,
+			"color": "0xFF0000",
+			"position": [
+				1156,
+				601
+			]
+		},
+		{
+			"button": "buttonF",
+			"buttonIDs": [
+				"F"
+			],
+			"graphic": "f",
+			"scale": 0.8,
+			"color": "0xFF009D",
+			"position": [
+				900,
+				45
+			]
+		}
+	]
 }

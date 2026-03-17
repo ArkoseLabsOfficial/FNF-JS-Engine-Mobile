@@ -1,32 +1,40 @@
 {
-  "buttons": [
-    {
-      "button": "buttonUp",
-      "graphic": "up",
-      "x": 0,
-      "y": 465,
-      "color": "0x00FF00"
-    },
-    {
-      "button": "buttonLeft",
-      "graphic": "left",
-      "x": 126,
-      "y": 585,
-      "color": "0xFFC24B99"
-    },
-    {
-      "button": "buttonRight",
-      "graphic": "right",
-      "x": 252,
-      "y": 585,
-      "color": "0xFFF9393F"
-    },
-    {
-      "button": "buttonDown",
-      "graphic": "down",
-      "x": 0,
-      "y": 585,
-      "color": "0xFF00FFFF"
-    }
-  ]
+	"buttons": [
+		{
+			"button": "buttonUp",
+			"graphic": "up",
+			"color": "0x00FF00",
+			"position": [
+				0,
+				465
+			]
+		},
+		{
+			"button": "buttonLeft",
+			"graphic": "left",
+			"color": "0xFFC24B99",
+			"position": [
+				126,
+				585
+			]
+		},
+		{
+			"button": "buttonRight",
+			"graphic": "right",
+			"color": "0xFFF9393F",
+			"position": [
+				252,
+				585
+			]
+		},
+		{
+			"button": "buttonDown",
+			"graphic": "down",
+			"color": "0xFF00FFFF",
+			"position": [
+				0,
+				585
+			]
+		}
+	]
 }

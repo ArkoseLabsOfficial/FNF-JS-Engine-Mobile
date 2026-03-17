@@ -4,24 +4,24 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.util.FlxDestroyUtil;
+import flixel.FlxBasic;
+import flixel.group.FlxGroup; //fuck you FlxGroup.
 
 /**
  * A simple mobile manager for who doesn't want to create these manually
- * if you're making big projects or have a experience to how controls work, you can create your own manager
+ * if you're making big projects or have a experience to how controls work, create the controls yourself
  */
-class MobileControlManager {
-	public var currentState:Dynamic;
-
-	public var mobilePad:FunkinMobilePad;
+class MobileControlManager extends FlxGroup {
 	public var mobilePadCam:FlxCamera;
+	public var mobilePad:FunkinMobilePad;
 	public var joyStickCam:FlxCamera;
 	public var joyStick:FunkinJoyStick;
 	public var hitboxCam:FlxCamera;
 	public var hitbox:FunkinHitbox;
 
-	public function new(state:Dynamic):Void
+	public function new():Void
 	{
-		this.currentState = state;
+		super();
 		trace("MobileControlManager initialized.");
 	}
 
@@ -29,20 +29,21 @@ class MobileControlManager {
 	public function makeMobilePad(DPad:String, Action:String)
 	{
 		if (mobilePad != null) removeMobilePad();
-		mobilePad = new FunkinMobilePad(DPad, Action, ClientPrefs.mobilePadAlpha);
+		mobilePad = new FunkinMobilePad(DPad, Action);
+		mobilePad.alpha = ClientPrefs.mobilePadAlpha;
 	}
 
 	public function addMobilePad(DPad:String, Action:String)
 	{
 		makeMobilePad(DPad, Action);
-		currentState.add(mobilePad);
+		add(mobilePad);
 	}
 
 	public function removeMobilePad():Void
 	{
 		if (mobilePad != null)
 		{
-			currentState.remove(mobilePad);
+			remove(mobilePad);
 			mobilePad = FlxDestroyUtil.destroy(mobilePad);
 		}
 
@@ -61,21 +62,24 @@ class MobileControlManager {
 		mobilePad.cameras = [mobilePadCam];
 	}
 
-	public function makeHitbox(?mode:String, ?hints:Bool) {
+	public function makeHitbox(?mode:String, ?hints:Bool)
+	{
 		if (hitbox != null) removeHitbox();
-		hitbox = new FunkinHitbox(mode, hints, ClientPrefs.hitboxAlpha);
+		hitbox = new FunkinHitbox(mode, hints);
+		hitbox.alpha = ClientPrefs.hitboxAlpha;
 	}
 
-	public function addHitbox(?mode:String, ?hints:Bool) {
+	public function addHitbox(?mode:String, ?hints:Bool)
+	{
 		makeHitbox(mode, hints);
-		currentState.add(hitbox);
+		add(hitbox);
 	}
 
 	public function removeHitbox():Void
 	{
 		if (hitbox != null)
 		{
-			currentState.remove(hitbox);
+			remove(hitbox);
 			hitbox = FlxDestroyUtil.destroy(hitbox);
 		}
 
@@ -104,14 +108,14 @@ class MobileControlManager {
 	public function addJoyStick(x:Float = 0, y:Float = 0, ?graphic:String, ?onMove:Float->Float->Float->String->Void, size:Float = 1):Void
 	{
 		makeJoyStick(x, y, graphic, onMove, size);
-		currentState.add(joyStick);
+		add(joyStick);
 	}
 
 	public function removeJoyStick():Void
 	{
 		if (joyStick != null)
 		{
-			currentState.remove(joyStick);
+			remove(joyStick);
 			joyStick = FlxDestroyUtil.destroy(joyStick);
 		}
 
@@ -129,7 +133,8 @@ class MobileControlManager {
 		joyStick.cameras = [joyStickCam];
 	}
 
-	public function destroy():Void {
+	override public function destroy():Void {
+		super.destroy();
 		removeMobilePad();
 		removeHitbox();
 		removeJoyStick();

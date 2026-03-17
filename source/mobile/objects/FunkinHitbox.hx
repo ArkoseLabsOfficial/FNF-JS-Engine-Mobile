@@ -1,21 +1,30 @@
-package mobile;
+package mobile.objects;
 
 import mobile.Hitbox;
 import openfl.display.BitmapData;
 import openfl.display.Shape;
 import openfl.geom.Matrix;
 import flixel.util.FlxColor;
+import objects.Note;
 
 class FunkinHitbox extends Hitbox {
 	public var currentMode:String;
 	public var showHints:Bool;
-	public function new(?mode:String, ?showHints:Bool, ?globalAlpha:Float = 0.7):Void
+	public function new(?mode:String, ?showHints:Bool):Void
 	{
-		super(mode, globalAlpha, false); //false means mobile-controls's hitbox creation is disabled.
+		super(mode, false); //false means library's hitbox creation is disabled.
 		currentMode = mode; //use this there.
 		this.showHints = showHints;
 
 		var Custom:String = mode != null ? mode : ClientPrefs.hitboxMode;
+		//Use Seperated Mania File like in JS Engine Shaggy Mod
+		var maniaHitbox:String = 'Mania ${Note.maniaKeys}';
+		trace('maniaHitbox: $maniaHitbox');
+		if (MobileConfig.hitboxModes.exists(maniaHitbox) && Note.maniaKeys != 4) {
+			trace('maniaHitbox found');
+			Custom = maniaHitbox;
+		}
+
 		if (!MobileConfig.hitboxModes.exists(Custom))
 			throw 'The ${Custom} Hitbox File doesn\'t exists.';
 
@@ -38,10 +47,10 @@ class FunkinHitbox extends Hitbox {
 			var buttonName:String = buttonData.button;
 			var buttonIDs:Array<String> = buttonData.buttonIDs;
 			var buttonUniqueID:Int = buttonData.buttonUniqueID;
-			var buttonX:Float = buttonData.x;
-			var buttonY:Float = buttonData.y;
-			var buttonWidth:Int = buttonData.width;
-			var buttonHeight:Int = buttonData.height;
+			var buttonX:Float = buttonData.position[0];
+			var buttonY:Float = buttonData.position[1];
+			var buttonWidth:Int = buttonData.scale[0];
+			var buttonHeight:Int = buttonData.scale[1];
 			var buttonColor = buttonData.color;
 			var buttonReturn = buttonData.returnKey;
 			var location = ClientPrefs.hitboxLocation;
@@ -50,24 +59,36 @@ class FunkinHitbox extends Hitbox {
 
 			switch (location) {
 				case 'Top':
-					if (buttonData.topX != null) buttonX = buttonData.topX;
-					if (buttonData.topY != null) buttonY = buttonData.topY;
-					if (buttonData.topWidth != null) buttonWidth = buttonData.topWidth;
-					if (buttonData.topHeight != null) buttonHeight = buttonData.topHeight;
+					if (buttonData.topPosition != null) {
+						buttonX = buttonData.topPosition[0];
+						buttonY = buttonData.topPosition[1];
+					}
+					if (buttonData.topScale != null) {
+						buttonWidth = buttonData.topScale[0];
+						buttonHeight = buttonData.topScale[1];
+					}
 					if (buttonData.topColor != null) buttonColor = buttonData.topColor;
 					if (buttonData.topReturnKey != null) buttonReturn = buttonData.topReturnKey;
 				case 'Middle':
-					if (buttonData.middleX != null) buttonX = buttonData.middleX;
-					if (buttonData.middleY != null) buttonY = buttonData.middleY;
-					if (buttonData.middleWidth != null) buttonWidth = buttonData.middleWidth;
-					if (buttonData.middleHeight != null) buttonHeight = buttonData.middleHeight;
+					if (buttonData.middlePosition != null) {
+						buttonX = buttonData.middlePosition[0];
+						buttonY = buttonData.middlePosition[1];
+					}
+					if (buttonData.middleScale != null) {
+						buttonWidth = buttonData.middleScale[0];
+						buttonHeight = buttonData.middleScale[1];
+					}
 					if (buttonData.middleColor != null) buttonColor = buttonData.middleColor;
 					if (buttonData.middleReturnKey != null) buttonReturn = buttonData.middleReturnKey;
 				case 'Bottom':
-					if (buttonData.bottomX != null) buttonX = buttonData.bottomX;
-					if (buttonData.bottomY != null) buttonY = buttonData.bottomY;
-					if (buttonData.bottomWidth != null) buttonWidth = buttonData.bottomWidth;
-					if (buttonData.bottomHeight != null) buttonHeight = buttonData.bottomHeight;
+					if (buttonData.bottomPosition != null) {
+						buttonX = buttonData.bottomPosition[0];
+						buttonY = buttonData.bottomPosition[1];
+					}
+					if (buttonData.bottomScale != null) {
+						buttonWidth = buttonData.bottomScale[0];
+						buttonHeight = buttonData.bottomScale[1];
+					}
 					if (buttonData.bottomColor != null) buttonColor = buttonData.bottomColor;
 					if (buttonData.bottomReturnKey != null) buttonReturn = buttonData.bottomReturnKey;
 			}
@@ -99,7 +120,6 @@ class FunkinHitbox extends Hitbox {
 
 	override function createHintGraphic(Width:Int, Height:Int, Color:Int = 0xFFFFFF, ?isLane:Bool = false):BitmapData
 	{
-		var guh:Float = globalAlpha;
 		var shape:Shape = new Shape();
 		shape.graphics.beginFill(Color);
 		switch (ClientPrefs.hitboxType) {
@@ -109,7 +129,7 @@ class FunkinHitbox extends Hitbox {
 				if (isLane)
 					shape.graphics.beginFill(Color);
 				else
-					shape.graphics.beginGradientFill(RADIAL, [Color, Color], [0, guh], [60, 255], matrix, PAD, RGB, 0);
+					shape.graphics.beginGradientFill(RADIAL, [Color, Color], [0, alpha], [60, 255], matrix, PAD, RGB, 0);
 				shape.graphics.drawRect(0, 0, Width, Height);
 				shape.graphics.endFill();
 			case "No Gradient (Old)":
@@ -125,7 +145,7 @@ class FunkinHitbox extends Hitbox {
 				if (isLane)
 					shape.graphics.beginFill(Color);
 				else
-					shape.graphics.beginGradientFill(RADIAL, [Color, FlxColor.TRANSPARENT], [guh, 0], [0, 255], null, null, null, 0.5);
+					shape.graphics.beginGradientFill(RADIAL, [Color, FlxColor.TRANSPARENT], [alpha, 0], [0, 255], null, null, null, 0.5);
 				shape.graphics.drawRect(3, 3, Width - 6, Height - 6);
 				shape.graphics.endFill();
 		}
@@ -139,8 +159,9 @@ class FunkinHitbox extends Hitbox {
 	{
 		var hint:MobileButton = new MobileButton(x, y, returned);
 		hint.loadGraphic(createHintGraphic(width, height, color));
+		var VSliceAllowed:Bool = (currentMode == 'V Slice' && Note.maniaKeys < 10);
 
-		if (showHints) {
+		if (showHints && !VSliceAllowed) {
 			var doHeightFix:Bool = false;
 			if (height == 144) doHeightFix = true;
 
@@ -166,18 +187,18 @@ class FunkinHitbox extends Hitbox {
 		hint.onDown.callback = function()
 		{
 			onButtonDown?.dispatch(hint, name, uniqueID);
-			if (hint.alpha != globalAlpha)
-				hint.alpha = globalAlpha;
-			if ((hint.hintUp?.alpha != 0.00001 || hint.hintDown?.alpha != 0.00001) && hint.hintUp != null && hint.hintDown != null)
+			if (hint.alpha != alpha && !VSliceAllowed)
+				hint.alpha = alpha;
+			if ((hint.hintUp?.alpha != 0.00001 || hint.hintDown?.alpha != 0.00001) && hint.hintUp != null && hint.hintDown != null && !VSliceAllowed)
 				hint.hintUp.alpha = hint.hintDown.alpha = 0.00001;
 		}
 		hint.onOut.callback = hint.onUp.callback = function()
 		{
 			onButtonUp?.dispatch(hint, name, uniqueID);
-			if (hint.alpha != 0.00001)
+			if (hint.alpha != 0.00001 && !VSliceAllowed)
 				hint.alpha = 0.00001;
-			if ((hint.hintUp?.alpha != globalAlpha || hint.hintDown?.alpha != globalAlpha) && hint.hintUp != null && hint.hintDown != null)
-				hint.hintUp.alpha = hint.hintDown.alpha = globalAlpha;
+			if ((hint.hintUp?.alpha != alpha || hint.hintDown?.alpha != alpha) && hint.hintUp != null && hint.hintDown != null && !VSliceAllowed)
+				hint.hintUp.alpha = hint.hintDown.alpha = alpha;
 		}
 		#if FLX_DEBUG
 		hint.ignoreDrawDebug = true;

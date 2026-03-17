@@ -1,4 +1,4 @@
-package mobile;
+package mobile.objects;
 
 import mobile.MobilePad;
 import flixel.graphics.frames.FlxTileFrames;
@@ -16,7 +16,7 @@ class FunkinMobilePad extends MobilePad {
 		#if MODS_ALLOWED
 		final modsPath:String = Paths.modFolders('mobile/MobilePad/Textures/$framePath.png');
 		if(FileSystem.exists(modsPath))
-			frames = FlxGraphic.fromBitmapData(BitmapData.fromFile(modsPath));
+			frames = FlxGraphic.fromBitmapData(FileSystem.getBitmapData(modsPath));
 		else #end if(Assets.exists(path))
 			frames = FlxGraphic.fromBitmapData(Assets.getBitmapData(path));
 		else
@@ -41,7 +41,7 @@ class FunkinMobilePad extends MobilePad {
 		return button;
 	}
 
-	public function new(DPad:String = "NONE", Action:String = "NONE", globalAlpha:Float = 0.7) {
-		super(DPad, Action, globalAlpha);
+	public function new(DPad:String, Action:String) {
+		super(DPad, Action);
 	}
 }

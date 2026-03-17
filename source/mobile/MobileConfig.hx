@@ -7,7 +7,7 @@ import openfl.utils.Assets;
 
 using StringTools;
 
-enum ButtonsModes
+enum ButtonModes
 {
 	ACTION;
 	DPAD;
@@ -21,90 +21,46 @@ class MobileConfig {
 	public static var mobileFolderPath:String = 'mobile/';
 
 	public static var save:FlxSave;
-
-	public static function init(saveName:String, savePath:String, mobilePath:String = 'mobile/', folders:Array<String>, modes:Array<ButtonsModes>)
+	public static function init(saveName:String, savePath:String, mobilePath:String = 'mobile/', folders:Array<Array<Dynamic>>)
 	{
 		save = new FlxSave();
-		trace('called');
 		save.bind(saveName, savePath);
 		if (mobilePath != null || mobilePath != '') mobileFolderPath = (mobilePath.endsWith('/') ? mobilePath : mobilePath + '/');
-		trace('called');
 
-		var intNumber:Int = -1;
-		for (i in folders) {
-			intNumber++;
-			switch (modes[intNumber]) {
+		for (folder in folders) {
+			switch (folder[1]) {
 				case ACTION:
-					trace('called');
-					readDirectoryPart1(mobileFolderPath + i, actionModes, ACTION);
-					trace('called');
+					readDirectoryPart1(mobileFolderPath + folder[0], actionModes, ACTION);
 					#if MODS_ALLOWED
-					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
+					for (folder in Mods.directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
+						trace('called');
 						readDirectoryPart1(Path.join([folder, 'ActionModes']), actionModes, ACTION);
 					}
 					#end
 				case DPAD:
-					trace('called');
-					readDirectoryPart1(mobileFolderPath + i, dpadModes, DPAD);
-					trace('called');
+					readDirectoryPart1(mobileFolderPath + folder[0], dpadModes, DPAD);
 					#if MODS_ALLOWED
-					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
+					for (folder in Mods.directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
+						trace('called');
 						readDirectoryPart1(Path.join([folder, 'DPadModes']), dpadModes, DPAD);
 					}
 					#end
 				case HITBOX:
-					trace('called');
-					readDirectoryPart1(mobileFolderPath + i, hitboxModes, HITBOX);
-					trace('called');
+					readDirectoryPart1(mobileFolderPath + folder[0], hitboxModes, HITBOX);
 					#if MODS_ALLOWED
-					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/Hitbox/')) {
+					for (folder in Mods.directoriesWithFile(Paths.getPreloadPath(), 'mobile/Hitbox/')) {
+						trace('called');
 						readDirectoryPart1(Path.join([folder, 'HitboxModes']), hitboxModes, HITBOX);
 					}
 					#end
 			}
 		}
-		trace(actionModes);
-		trace(hitboxModes);
-		trace(dpadModes);
 	}
 
-	static function directoriesWithFile(path:String, fileToFind:String, mods:Bool = true)
+	static function readDirectoryPart1(folder:String, map:Dynamic, mode:ButtonModes)
 	{
-		var foldersToCheck:Array<String> = [];
-		#if sys
-		if(FileSystem.exists(path + fileToFind))
-		#end
-			foldersToCheck.push(path + fileToFind);
-
-		#if MODS_ALLOWED
-		if(mods)
-		{
-			// Global mods first
-			for(mod in Paths.getGlobalMods())
-			{
-				var folder:String = Paths.mods(mod + '/' + fileToFind);
-				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);
-			}
-
-			// Then "PsychEngine/mods/" main folder
-			var folder:String = Paths.mods(fileToFind);
-			if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(Paths.mods(fileToFind));
-
-			// And lastly, the loaded mod's folder
-			if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			{
-				var folder:String = Paths.mods(Paths.currentModDirectory + '/' + fileToFind);
-				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);
-			}
-		}
-		#end
-		return foldersToCheck;
-	}
-
-	static function readDirectoryPart1(folder:String, map:Dynamic, mode:ButtonsModes)
-	{
+		trace('' + folder);
 		folder = folder.contains(':') ? folder.split(':')[1] : folder;
-		trace(folder);
 
 		#if mobile_controls_file_support if (FileSystem.exists(folder)) #end
 		for (file in readDirectoryPart2(folder))
@@ -138,7 +94,6 @@ class MobileConfig {
 	static function readDirectoryPart2(directory:String):Array<String>
 	{
 		var dirs:Array<String> = [];
-		trace(directory);
 
 		#if mobile_controls_file_support
 		return FileSystem.readDirectory(directory);
@@ -167,12 +122,12 @@ typedef MobileButtonsData =
 
 typedef CustomHitboxData =
 {
-	hints:Array<HitboxData>, //support old jsons
+	hints:Array<HitboxData>, //support library's jsons
 	none:Array<HitboxData>,
 	single:Array<HitboxData>,
 	double:Array<HitboxData>,
 	triple:Array<HitboxData>,
-	quad:Array<HitboxData>,
+	quad:Array<HitboxData>
 }
 
 typedef HitboxData =
@@ -185,44 +140,40 @@ typedef HitboxData =
 	y:Dynamic, // the button's Y position on screen.
 	width:Dynamic, // the button's Width on screen.
 	height:Dynamic, // the button's Height on screen.
+	position:Array<Float>,
+	scale:Array<Int>,
 	color:String, // the button color, default color is white.
 	returnKey:String, // the button return, default return is nothing (please don't add custom return if you don't need).
 	extraKeyMode:Null<Int>,
 	//Top
-	topX:Dynamic,
-	topY:Dynamic,
-	topWidth:Dynamic,
-	topHeight:Dynamic,
+	topPosition:Array<Float>,
+	topScale:Array<Int>,
 	topColor:String,
 	topReturnKey:String,
 	topExtraKeyMode:Null<Int>,
 	//Middle
-	middleX:Dynamic,
-	middleY:Dynamic,
-	middleWidth:Dynamic,
-	middleHeight:Dynamic,
+	middlePosition:Array<Float>,
+	middleScale:Array<Int>,
 	middleColor:String,
 	middleReturnKey:String,
 	middleExtraKeyMode:Null<Int>,
 	//Bottom
-	bottomX:Dynamic,
-	bottomY:Dynamic,
-	bottomWidth:Dynamic,
-	bottomHeight:Dynamic,
+	bottomPosition:Array<Float>,
+	bottomScale:Array<Int>,
 	bottomColor:String,
 	bottomReturnKey:String,
-	bottomExtraKeyMode:Null<Int>,
+	bottomExtraKeyMode:Null<Int>
 }
+
 
 typedef ButtonsData =
 {
-	button:String, // what MobileButton should be used, must be a valid MobileButton var from MobilePad as a string.
-	buttonIDs:Array<String>, // what MobileButton Button Iad should be used, If you're using a the library for PsychEngine 0.7 Versions, This is useful.
+	button:String, // the button's name for checking pressed directly.
+	buttonIDs:Array<String>, // what MobileButton Button IDs should be used.
 	buttonUniqueID:Dynamic, // the button's special ID for button
 	graphic:String, // the graphic of the button, usually can be located in the MobilePad xml.
-	x:Float, // the button's X position on screen.
-	y:Float, // the button's Y position on screen.
+	position:Array<Null<Float>>, // the button's X/Y position on screen.
 	color:String, // the button color, default color is white.
-	scale:Null<Float>, // the button scale, default scale is 1.
-	returnKey:String, // the button return, default return is nothing (please don't add custom return if you don't need).
+	scale:Null<Float>, //the button scale, default scale is 1.
+	returnKey:String // the button return, default return is nothing but If you're game using a lua scripting this will be useful.
 }

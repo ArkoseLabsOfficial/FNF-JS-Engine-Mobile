@@ -1,36 +1,52 @@
 {
-  "buttons": [
-    {
-      "button": "buttonUp",
-      "buttonIDs": ["UP"],
-      "graphic": "up",
-      "x": 105,
-      "y": 0,
-      "color": "0xFF12FA05"
-    },
-    {
-      "button": "buttonLeft",
-      "buttonIDs": ["LEFT"],
-      "graphic": "left",
-      "x": 0,
-      "y": 95,
-      "color": "0xFFC24B99"
-    },
-    {
-      "button": "buttonRight",
-      "buttonIDs": ["RIGHT"],
-      "graphic": "right",
-      "x": 196,
-      "y": 95,
-      "color": "0xFFF9393F"
-    },
-    {
-      "button": "buttonDown",
-      "buttonIDs": ["DOWN"],
-      "graphic": "down",
-      "x": 98,
-      "y": 192,
-      "color": "0xFF00FFFF"
-    }
-  ]
+	"buttons": [
+		{
+			"button": "buttonUp",
+			"buttonIDs": [
+				"UP"
+			],
+			"graphic": "up",
+			"color": "0xFF12FA05",
+			"position": [
+				105,
+				0
+			]
+		},
+		{
+			"button": "buttonLeft",
+			"buttonIDs": [
+				"LEFT"
+			],
+			"graphic": "left",
+			"color": "0xFFC24B99",
+			"position": [
+				0,
+				95
+			]
+		},
+		{
+			"button": "buttonRight",
+			"buttonIDs": [
+				"RIGHT"
+			],
+			"graphic": "right",
+			"color": "0xFFF9393F",
+			"position": [
+				196,
+				95
+			]
+		},
+		{
+			"button": "buttonDown",
+			"buttonIDs": [
+				"DOWN"
+			],
+			"graphic": "down",
+			"color": "0xFF00FFFF",
+			"position": [
+				98,
+				192
+			]
+		}
+	]
 }

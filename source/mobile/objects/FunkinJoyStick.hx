@@ -1,4 +1,4 @@
-package mobile;
+package mobile.objects;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -17,6 +17,8 @@ import openfl.display.BitmapData;
 import sys.io.File;
 import sys.FileSystem;
 #end
+
+import mobile.JoyStick;
 
 using StringTools;
 

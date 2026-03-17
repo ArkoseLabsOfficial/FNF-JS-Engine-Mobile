@@ -1,12 +1,16 @@
 {
-  "buttons": [
-    {
-      "button": "buttonB",
-      "buttonIDs": ["B"],
-      "graphic": "b",
-      "x": 1148,
-      "y": 585,
-      "color": "0xFFCB00"
-    }
-  ]
+	"buttons": [
+		{
+			"button": "buttonB",
+			"buttonIDs": [
+				"B"
+			],
+			"graphic": "b",
+			"color": "0xFFCB00",
+			"position": [
+				1148,
+				585
+			]
+		}
+	]
 }

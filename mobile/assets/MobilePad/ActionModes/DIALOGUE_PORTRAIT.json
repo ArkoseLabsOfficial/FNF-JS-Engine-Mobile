@@ -1,44 +1,64 @@
 {
-  "buttons": [
-    {
-      "button": "buttonX",
-      "buttonIDs": ["X"],
-      "graphic": "x",
-      "x": 908,
-      "y": 0,
-      "color": "0x99062D"
-    },
-    {
-      "button": "buttonY",
-      "buttonIDs": ["Y"],
-      "graphic": "y",
-      "x": 1032,
-      "y": 0,
-      "color": "0x4A35B9"
-    },
-    {
-      "button": "buttonB",
-      "buttonIDs": ["B"],
-      "graphic": "b",
-      "x": 1032,
-      "y": 125,
-      "color": "0xFFCB00"
-    },
-    {
-      "button": "buttonZ",
-      "buttonIDs": ["Z"],
-      "graphic": "z",
-      "x": 1156,
-      "y": 0,
-      "color": "0xCCB98E"
-    },
-    {
-      "button": "buttonA",
-      "buttonIDs": ["A"],
-      "graphic": "a",
-      "x": 1156,
-      "y": 125,
-      "color": "0xFF0000"
-    }
-  ]
+	"buttons": [
+		{
+			"button": "buttonX",
+			"buttonIDs": [
+				"X"
+			],
+			"graphic": "x",
+			"color": "0x99062D",
+			"position": [
+				908,
+				0
+			]
+		},
+		{
+			"button": "buttonY",
+			"buttonIDs": [
+				"Y"
+			],
+			"graphic": "y",
+			"color": "0x4A35B9",
+			"position": [
+				1032,
+				0
+			]
+		},
+		{
+			"button": "buttonB",
+			"buttonIDs": [
+				"B"
+			],
+			"graphic": "b",
+			"color": "0xFFCB00",
+			"position": [
+				1032,
+				125
+			]
+		},
+		{
+			"button": "buttonZ",
+			"buttonIDs": [
+				"Z"
+			],
+			"graphic": "z",
+			"color": "0xCCB98E",
+			"position": [
+				1156,
+				0
+			]
+		},
+		{
+			"button": "buttonA",
+			"buttonIDs": [
+				"A"
+			],
+			"graphic": "a",
+			"color": "0xFF0000",
+			"position": [
+				1156,
+				125
+			]
+		}
+	]
 }

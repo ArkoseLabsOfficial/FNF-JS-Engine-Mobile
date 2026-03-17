@@ -1,12 +1,16 @@
 {
-  "buttons": [
-    {
-      "button": "buttonP",
-      "buttonIDs": ["P"],
-      "graphic": "online_pause",
-      "x": 1156,
-      "y": 2,
-      "color": "0xE5DE00"
-    }
-  ]
+	"buttons": [
+		{
+			"button": "buttonP",
+			"buttonIDs": [
+				"P"
+			],
+			"graphic": "online_pause",
+			"color": "0xE5DE00",
+			"position": [
+				1156,
+				2
+			]
+		}
+	]
 }

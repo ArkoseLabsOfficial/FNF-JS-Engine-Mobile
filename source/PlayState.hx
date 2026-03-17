@@ -6289,7 +6289,8 @@ class PlayState extends MusicBeatState
 	}
 
 	public function createNewManager(name:String, keyDetectionAllowed:Bool) {
-		var mobileManagerNew = new MobileControlManager(this);
+		var mobileManagerNew = new MobileControlManager();
+		add(mobileManagerNew);
 		var managerShit:Array<Dynamic> = [mobileManagerNew, keyDetectionAllowed];
 		customManagers.set(name, managerShit);
 		if(!variables.exists(name))
