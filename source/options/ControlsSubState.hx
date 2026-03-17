@@ -88,9 +88,13 @@ class ControlsSubState extends MusicBeatSubstate {
 		}
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 		changeSelection();
+	}
 
+	override function create() {
+		super.create();
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.addMobilePad('FULL_ALTER_2', 'B');
+		mobileManager.addMobilePadCamera();
 		#end
 	}
 

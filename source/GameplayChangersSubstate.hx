@@ -231,12 +231,15 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		changeSelection();
 		reloadCheckboxes();
 
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+	}
+
+	override function create() {
+		super.create();
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.addMobilePad('FULL_ALTER', 'A_B_C');
 		mobileManager.addMobilePadCamera();
 		#end
-
-		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 
 	override function destroy() {

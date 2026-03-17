@@ -172,12 +172,16 @@ class NotesSubState extends MusicBeatSubstate
 		updateTip();
 
 		FlxG.mouse.visible = true;
+	}
 
+	override function create() {
+		super.create();
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.addMobilePad('NONE', 'B_C');
 		mobileManager.mobilePad.getButton('buttonB').x = FlxG.width - 132;
 		mobileManager.mobilePad.getButton('buttonC').x = 0;
 		mobileManager.mobilePad.getButton('buttonC').y = FlxG.height - 135;
+		mobileManager.addMobilePadCamera();
 		#end
 	}
 
