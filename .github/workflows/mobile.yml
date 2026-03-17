@@ -103,7 +103,7 @@ jobs:
           path: build/release/ios/build/Release-iphoneos/*.ipa
           if-no-files-found: error
 
-       - name: Clear Old Cache
+      - name: Clear Old Cache
         uses: actions/github-script@v7
         continue-on-error: true # Don't break the build if deletion fails
         with:
