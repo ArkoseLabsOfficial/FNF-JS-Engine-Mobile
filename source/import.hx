@@ -59,6 +59,7 @@ import haxe.Json;
 
 #if MOBILE_CONTROLS_ALLOWED
 import mobile.*;
+import mobile.objects.*;
 #end
 #if mobile
 import mobile.psychlua.Functions;
