@@ -125,13 +125,9 @@ class TitleState extends MusicBeatState
       #if MOBILE_CONTROLS_ALLOWED
       MobileConfig.init('MobileControls', CoolUtil.getSavePath(), 'assets/mobile/',
         [
-          'MobilePad/DPadModes',
-          'MobilePad/ActionModes',
-          'Hitbox/HitboxModes',
-        ], [
-          DPAD,
-          ACTION,
-          HITBOX
+          ['MobilePad/DPadModes', ButtonModes.DPAD],
+          ['MobilePad/ActionModes', ButtonModes.ACTION],
+          ['Hitbox/HitboxModes', ButtonModes.HITBOX]
         ]
       );
       #end

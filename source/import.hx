@@ -60,6 +60,7 @@ import haxe.Json;
 #if MOBILE_CONTROLS_ALLOWED
 import mobile.*;
 import mobile.objects.*;
+import mobile.MobileConfig.ButtonModes;
 #end
 #if mobile
 import mobile.psychlua.Functions;

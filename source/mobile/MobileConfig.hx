@@ -32,24 +32,21 @@ class MobileConfig {
 				case ACTION:
 					readDirectoryPart1(mobileFolderPath + folder[0], actionModes, ACTION);
 					#if MODS_ALLOWED
-					for (folder in Mods.directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
-						trace('called');
+					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
 						readDirectoryPart1(Path.join([folder, 'ActionModes']), actionModes, ACTION);
 					}
 					#end
 				case DPAD:
 					readDirectoryPart1(mobileFolderPath + folder[0], dpadModes, DPAD);
 					#if MODS_ALLOWED
-					for (folder in Mods.directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
-						trace('called');
+					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/MobilePad/')) {
 						readDirectoryPart1(Path.join([folder, 'DPadModes']), dpadModes, DPAD);
 					}
 					#end
 				case HITBOX:
 					readDirectoryPart1(mobileFolderPath + folder[0], hitboxModes, HITBOX);
 					#if MODS_ALLOWED
-					for (folder in Mods.directoriesWithFile(Paths.getPreloadPath(), 'mobile/Hitbox/')) {
-						trace('called');
+					for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/Hitbox/')) {
 						readDirectoryPart1(Path.join([folder, 'HitboxModes']), hitboxModes, HITBOX);
 					}
 					#end
@@ -57,15 +54,46 @@ class MobileConfig {
 		}
 	}
 
+	static function directoriesWithFile(path:String, fileToFind:String, mods:Bool = true)
+	{
+		var foldersToCheck:Array<String> = [];
+		#if sys
+		if(FileSystem.exists(path + fileToFind))
+		#end
+			foldersToCheck.push(path + fileToFind);
+
+		#if MODS_ALLOWED
+		if(mods)
+		{
+			// Global mods first
+			for(mod in Paths.getGlobalMods())
+			{
+				var folder:String = Paths.mods(mod + '/' + fileToFind);
+				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);
+			}
+
+			// Then "PsychEngine/mods/" main folder
+			var folder:String = Paths.mods(fileToFind);
+			if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(Paths.mods(fileToFind));
+
+			// And lastly, the loaded mod's folder
+			if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
+			{
+				var folder:String = Paths.mods(Paths.currentModDirectory + '/' + fileToFind);
+				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);
+			}
+		}
+		#end
+		return foldersToCheck;
+	}
+
 	static function readDirectoryPart1(folder:String, map:Dynamic, mode:ButtonModes)
 	{
-		trace('' + folder);
 		folder = folder.contains(':') ? folder.split(':')[1] : folder;
 
 		#if mobile_controls_file_support if (FileSystem.exists(folder)) #end
 		for (file in readDirectoryPart2(folder))
 		{
-			trace(file);
 			if (Path.extension(file) == 'json')
 			{
 				file = Path.join([folder, Path.withoutDirectory(file)]);

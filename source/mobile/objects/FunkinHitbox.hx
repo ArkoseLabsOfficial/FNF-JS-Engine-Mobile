@@ -17,13 +17,6 @@ class FunkinHitbox extends Hitbox {
 		this.showHints = showHints;
 
 		var Custom:String = mode != null ? mode : ClientPrefs.hitboxMode;
-		//Use Seperated Mania File like in JS Engine Shaggy Mod
-		var maniaHitbox:String = 'Mania ${Note.maniaKeys}';
-		trace('maniaHitbox: $maniaHitbox');
-		if (MobileConfig.hitboxModes.exists(maniaHitbox) && Note.maniaKeys != 4) {
-			trace('maniaHitbox found');
-			Custom = maniaHitbox;
-		}
 
 		if (!MobileConfig.hitboxModes.exists(Custom))
 			throw 'The ${Custom} Hitbox File doesn\'t exists.';
@@ -159,9 +152,8 @@ class FunkinHitbox extends Hitbox {
 	{
 		var hint:MobileButton = new MobileButton(x, y, returned);
 		hint.loadGraphic(createHintGraphic(width, height, color));
-		var VSliceAllowed:Bool = (currentMode == 'V Slice' && Note.maniaKeys < 10);
 
-		if (showHints && !VSliceAllowed) {
+		if (showHints) {
 			var doHeightFix:Bool = false;
 			if (height == 144) doHeightFix = true;
 
@@ -187,17 +179,17 @@ class FunkinHitbox extends Hitbox {
 		hint.onDown.callback = function()
 		{
 			onButtonDown?.dispatch(hint, name, uniqueID);
-			if (hint.alpha != alpha && !VSliceAllowed)
+			if (hint.alpha != alpha)
 				hint.alpha = alpha;
-			if ((hint.hintUp?.alpha != 0.00001 || hint.hintDown?.alpha != 0.00001) && hint.hintUp != null && hint.hintDown != null && !VSliceAllowed)
+			if ((hint.hintUp?.alpha != 0.00001 || hint.hintDown?.alpha != 0.00001) && hint.hintUp != null && hint.hintDown != null)
 				hint.hintUp.alpha = hint.hintDown.alpha = 0.00001;
 		}
 		hint.onOut.callback = hint.onUp.callback = function()
 		{
 			onButtonUp?.dispatch(hint, name, uniqueID);
-			if (hint.alpha != 0.00001 && !VSliceAllowed)
+			if (hint.alpha != 0.00001)
 				hint.alpha = 0.00001;
-			if ((hint.hintUp?.alpha != alpha || hint.hintDown?.alpha != alpha) && hint.hintUp != null && hint.hintDown != null && !VSliceAllowed)
+			if ((hint.hintUp?.alpha != alpha || hint.hintDown?.alpha != alpha) && hint.hintUp != null && hint.hintDown != null)
 				hint.hintUp.alpha = hint.hintDown.alpha = alpha;
 		}
 		#if FLX_DEBUG
