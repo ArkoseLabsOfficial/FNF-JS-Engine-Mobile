@@ -45,6 +45,7 @@ class ChartingState extends MusicBeatState
   var lastTouchY:Float = 0;
   var touchDragNote:Note = null;
   var touchSustainAccum:Float = 0;
+  var swipeZoneSprite:FlxSprite;
   #end
 
   public static var noteTypeList:Array<String> = // Used for backwards compatibility with 0.1 - 0.3.2 charts, though, you should add your hardcoded custom note types here too.
@@ -645,6 +646,13 @@ class ChartingState extends MusicBeatState
       idleMusic.pauseMusic();
 
     updateGrid();
+
+    #if MOBILE_CONTROLS_ALLOWED
+    swipeZoneSprite = new FlxSprite(420, 0).makeGraphic(150, FlxG.height, FlxColor.CYAN);
+    swipeZoneSprite.alpha = 0.2;
+    swipeZoneSprite.scrollFactor.set(0, 0);
+    add(swipeZoneSprite);
+    #end
 
     super.create();
 
@@ -2726,12 +2734,15 @@ class ChartingState extends MusicBeatState
         var dragDistY = Math.abs(touch.screenY - touchStartY);
         var dragDistX = Math.abs(touch.screenX - touchStartX);
 
+        // Determine intent after a small 15px drag threshold
         if (touchDragType == 'none' && (dragDistY > 15 || dragDistX > 15)) {
           if (touchDragNote != null) {
             touchDragType = 'sustain';
             selectNote(touchDragNote);
-          } else {
+          } else if (touchStartX >= swipeZoneSprite.x && touchStartX <= swipeZoneSprite.x + swipeZoneSprite.width) {
             touchDragType = 'scroll';
+          } else {
+            touchDragType = 'invalid_drag'; 
           }
         }
 
