@@ -14,11 +14,11 @@ import flixel.FlxBasic;
  */
 class MobileControlManager implements IFlxDestroyable {
 	public var mobilePadCam:FlxCamera;
-	public var mobilePad:MobilePad;
+	public var mobilePad:FunkinMobilePad;
 	public var joyStickCam:FlxCamera;
-	public var joyStick:JoyStick;
+	public var joyStick:FunkinJoyStick;
 	public var hitboxCam:FlxCamera;
-	public var hitbox:Hitbox;
+	public var hitbox:FunkinHitbox;
 	public var curState:Dynamic;
 
 	public function new(target:Dynamic):Void
