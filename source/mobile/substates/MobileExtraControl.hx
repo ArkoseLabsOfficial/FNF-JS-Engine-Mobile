@@ -78,10 +78,10 @@ class MobileExtraControl extends MusicBeatSubstate
 
 		updateTitle(titleNum + 1, true, 0);
 
+		super.create();
+
 		mobileManager.addMobilePad("UP_DOWN", "OptionsC");
 		mobileManager.addMobilePadCamera();
-
-		super.create();
 	}
 
 	var isDown:Bool = false;

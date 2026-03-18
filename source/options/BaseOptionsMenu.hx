@@ -125,10 +125,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		searchText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK);
 		add(searchText);
 		FlxG.mouse.visible = true;
-	}
 
-	override function create() {
-		super.create();
 		#if MOBILE_CONTROLS_ALLOWED
 		mobileManager.addMobilePad("FULL_ALTER", "A_B_C");
 		mobileManager.addMobilePadCamera();
