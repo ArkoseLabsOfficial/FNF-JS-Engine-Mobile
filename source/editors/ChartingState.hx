@@ -37,6 +37,16 @@ import shaders.RGBPalette;
 @:access(openfl.media.Sound.__buffer)
 class ChartingState extends MusicBeatState
 {
+  #if MOBILE_CONTROLS_ALLOWED
+  var touchDragType:String = 'none';
+  var touchStartX:Float = 0;
+  var touchStartY:Float = 0;
+  var lastTouchX:Float = 0;
+  var lastTouchY:Float = 0;
+  var touchDragNote:Note = null;
+  var touchSustainAccum:Float = 0;
+  #end
+
   public static var noteTypeList:Array<String> = // Used for backwards compatibility with 0.1 - 0.3.2 charts, though, you should add your hardcoded custom note types here too.
     [
       '',
@@ -489,19 +499,20 @@ class ChartingState extends MusicBeatState
     UI_box.scrollFactor.set();
 
     #if MOBILE_CONTROLS_ALLOWED
-    text =
-		"Up/Down - Change Conductor's strum time
-		\nLeft/Right - Go to the previous/next section
-		\nG - Reset Song Playback Rate
-		\nHold Y to move 4x faster
-		\nHold F and touch on an arrow to select it
-		\nV/D - Zoom in/out
-		\nZ - Undo
-		\n
-		\nC - Test your chart inside Chart Editor
-		\nA - Play your chart
-		\nUp/Down (Right Side) - Decrease/Increase Note Sustain Length
-		\nX - Stop/Resume song";
+    text = "Tap empty grid - Place a note
+      \nTap a note - Select it
+      \nTap a selected note - Delete it
+      \nDrag Up/Down on Grid - Scroll song time
+      \nDrag Up/Down on Note - Change sustain length
+      \nLeft/Right - Go to the previous/next section
+      \nG - Reset Song Playback Rate
+      \nHold Y to move 4x faster
+      \nV/D - Zoom in/out
+      \nZ - Undo
+      \n
+      \nC - Test your chart
+      \nA - Play your chart
+      \nX - Stop/Resume song";
     #else
     text = "W/S or Mouse Wheel - Change Conductor's strum time
 		\nA/D - Go to the previous/next section
@@ -2687,66 +2698,126 @@ class ChartingState extends MusicBeatState
           selectionEvent.y = selectionNote.y;
         }
         if (selectionNote.animation.curAnim == null) selectionNote.playAnim('static' + selectionNote.noteData, false);
-        else if (!selectionNote.animation.curAnim.name.endsWith(Std.string(selectionNote.noteData))) selectionNote.playAnim('static' + selectionNote.noteData,
-          false);
-      } else
-      {
+        else if (!selectionNote.animation.curAnim.name.endsWith(Std.string(selectionNote.noteData))) selectionNote.playAnim('static' + selectionNote.noteData, false);
+      } else {
         selectionNote.visible = false;
       }
 
       if (touch.justPressed)
       {
-        if (touch.overlaps(curRenderedNotes))
-        {
-          if (!mobileButtonPressed('F'))
-          {
-            saveUndo(_song);
-            if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('removeNote'), 0.7);
-          }
-          if (mobileButtonPressed('F'))
-          {
-            if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('selectNote'), 0.7);
-          }
-          curRenderedNotes.forEachAlive(function(note:Note) {
-            if (touch.overlaps(note))
-            {
-              if (mobileButtonPressed('F'))
-              {
-                selectNote(note);
-              } else {
-                selectionNote.playAnim('pressed' + selectionNote.noteData, true);
-                // trace('tryin to delete note...');
-                deleteNote(note);
-              }
-            }
-          });
-        } else
-        {
-          if (touch.x > gridBG.x
-            && touch.x < gridBG.x + gridBG.width
-            && touch.y > gridBG.y
-            && touch.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom])
-          {
-            saveUndo(_song);
-            FlxG.log.add('added note');
-            addNote();
-            var addCount:Float = 0;
-            if (check_stackActive.checked)
-            {
-              addCount = stepperStackNum.value * stepperStackOffset.value - 1;
-            }
-            for (i in 0...Std.int(addCount))
-            {
-              addNote(curSelectedNote[0] + (15000 / Conductor.bpm) / stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value),
-                currentType);
-            }
-            selectionNote.playAnim('confirm' + selectionNote.noteData, true);
-            if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('addedNote'), 0.7);
+        touchStartX = touch.screenX;
+        touchStartY = touch.screenY;
+        lastTouchX = touch.screenX;
+        lastTouchY = touch.screenY;
+        touchDragType = 'none';
+        touchDragNote = null;
+        touchSustainAccum = 0;
 
-            // updateGrid(false);
-            updateNoteUI();
-          } else if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('click'));
+        curRenderedNotes.forEachAlive(function(note:Note) {
+          if (touch.overlaps(note)) {
+            touchDragNote = note;
+          }
+        });
+      }
+
+      if (touch.pressed)
+      {
+        var deltaY = touch.screenY - lastTouchY;
+        var dragDistY = Math.abs(touch.screenY - touchStartY);
+        var dragDistX = Math.abs(touch.screenX - touchStartX);
+
+        if (touchDragType == 'none' && (dragDistY > 15 || dragDistX > 15)) {
+          if (touchDragNote != null) {
+            touchDragType = 'sustain';
+            selectNote(touchDragNote);
+          } else {
+            touchDragType = 'scroll';
+          }
         }
+
+        if (touchDragType == 'scroll') {
+          if (idleMusic != null && idleMusic.music != null && idleMusicAllow) idleMusic.unpauseMusic(2);
+          resetBuddies();
+          lilBf.color = lilOpp.color = FlxColor.WHITE;
+          FlxG.sound.music.pause();
+
+          var timeMult = 15; 
+          FlxG.sound.music.time -= deltaY * timeMult;
+          pauseAndSetVocalsTime();
+        }
+        else if (touchDragType == 'sustain' && touchDragNote != null) {
+          touchSustainAccum += deltaY;
+          var threshold = 20; 
+          if (Math.abs(touchSustainAccum) >= threshold) {
+            var steps = Math.floor(Math.abs(touchSustainAccum) / threshold);
+            var dir = touchSustainAccum > 0 ? 1 : -1;
+            changeNoteSustain(dir * Conductor.stepCrochet * steps);
+            touchSustainAccum -= dir * threshold * steps;
+          }
+        }
+
+        lastTouchX = touch.screenX;
+        lastTouchY = touch.screenY;
+      }
+
+      if (touch.justReleased)
+      {
+        if (touchDragType == 'none')
+        {
+          if (touchDragNote != null)
+          {
+            // Check if the note is already the currently selected note
+            var noteDataToCheck:Int = touchDragNote.noteData;
+            if (noteDataToCheck > -1 && touchDragNote.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
+
+            var isAlreadySelected:Bool = false;
+            if (curSelectedNote != null && curSelectedNote[0] == touchDragNote.strumTime && curSelectedNote[1] == noteDataToCheck)
+            {
+                isAlreadySelected = true;
+            }
+
+            if (isAlreadySelected)
+            {
+                saveUndo(_song);
+                if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('removeNote'), 0.7);
+                selectionNote.playAnim('pressed' + selectionNote.noteData, true);
+                deleteNote(touchDragNote);
+            }
+            else
+            {
+                if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('selectNote'), 0.7);
+                selectNote(touchDragNote);
+            }
+          }
+          else
+          {
+            if (touch.x > gridBG.x
+              && touch.x < gridBG.x + gridBG.width
+              && touch.y > gridBG.y
+              && touch.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom])
+            {
+              saveUndo(_song);
+              addNote();
+              var addCount:Float = 0;
+              if (check_stackActive.checked)
+              {
+                addCount = stepperStackNum.value * stepperStackOffset.value - 1;
+              }
+              for (i in 0...Std.int(addCount))
+              {
+                addNote(curSelectedNote[0] + (15000 / Conductor.bpm) / stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
+              }
+              selectionNote.playAnim('confirm' + selectionNote.noteData, true);
+              if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('addedNote'), 0.7);
+
+              updateNoteUI();
+            }
+            else if (soundEffectsCheck.checked) FlxG.sound.play(Paths.sound('click'));
+          }
+        }
+
+        touchDragType = 'none';
+        touchDragNote = null;
       }
     }
     #else
