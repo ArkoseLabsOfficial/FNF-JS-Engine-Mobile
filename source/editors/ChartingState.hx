@@ -648,7 +648,7 @@ class ChartingState extends MusicBeatState
     updateGrid();
 
     #if MOBILE_CONTROLS_ALLOWED
-    swipeZoneSprite = new FlxSprite(420, 0).makeGraphic(150, FlxG.height, FlxColor.CYAN);
+    swipeZoneSprite = new FlxSprite(0, 0).makeGraphic(200, FlxG.height, FlxColor.CYAN);
     swipeZoneSprite.alpha = 0.2;
     swipeZoneSprite.scrollFactor.set(0, 0);
     add(swipeZoneSprite);
@@ -2734,7 +2734,6 @@ class ChartingState extends MusicBeatState
         var dragDistY = Math.abs(touch.screenY - touchStartY);
         var dragDistX = Math.abs(touch.screenX - touchStartX);
 
-        // Determine intent after a small 15px drag threshold
         if (touchDragType == 'none' && (dragDistY > 15 || dragDistX > 15)) {
           if (touchDragNote != null) {
             touchDragType = 'sustain';
