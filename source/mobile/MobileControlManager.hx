@@ -56,11 +56,11 @@ class MobileControlManager implements IFlxDestroyable {
 		}
 	}
 
-	public function addMobilePadCamera():Void
+	public function addMobilePadCamera(defaultDrawTarget:Bool = false):Void
 	{
 		mobilePadCam = new FlxCamera();
 		mobilePadCam.bgColor.alpha = 0;
-		FlxG.cameras.add(mobilePadCam, false);
+		FlxG.cameras.add(mobilePadCam, defaultDrawTarget);
 		mobilePad.cameras = [mobilePadCam];
 	}
 
@@ -92,11 +92,11 @@ class MobileControlManager implements IFlxDestroyable {
 		}
 	}
 
-	public function addHitboxCamera():Void
+	public function addHitboxCamera(defaultDrawTarget:Bool = false):Void
 	{
 		hitboxCam = new FlxCamera();
 		hitboxCam.bgColor.alpha = 0;
-		FlxG.cameras.add(hitboxCam, false);
+		FlxG.cameras.add(hitboxCam, defaultDrawTarget);
 		hitbox.cameras = [hitboxCam];
 	}
 
@@ -128,10 +128,10 @@ class MobileControlManager implements IFlxDestroyable {
 		}
 	}
 
-	public function addJoyStickCamera():Void {
+	public function addJoyStickCamera(defaultDrawTarget:Bool = false):Void {
 		joyStickCam = new FlxCamera();
 		joyStickCam.bgColor.alpha = 0;
-		FlxG.cameras.add(joyStickCam, false);
+		FlxG.cameras.add(joyStickCam, defaultDrawTarget);
 		joyStick.cameras = [joyStickCam];
 	}
 
