@@ -2,147 +2,67 @@
 	"buttons": [
 		{
 			"button": "buttonV",
-			"buttonIDs": [
-				"V"
-			],
+			"buttonIDs": ["V"],
 			"graphic": "v",
 			"color": "0x49A9B2",
-			"position": [
-				784,
-				472
-			]
+			"scale": 0.9,
+			"position": [824, 492]
 		},
 		{
 			"button": "buttonD",
-			"buttonIDs": [
-				"D"
-			],
+			"buttonIDs": ["D"],
 			"graphic": "d",
 			"color": "0x0078FF",
-			"position": [
-				784,
-				596
-			]
+			"scale": 0.9,
+			"position": [824, 606]
 		},
 		{
 			"button": "buttonX",
-			"buttonIDs": [
-				"X"
-			],
+			"buttonIDs": ["X"],
 			"graphic": "x",
 			"color": "0x99062D",
-			"position": [
-				908,
-				472
-			]
+			"scale": 0.9,
+			"position": [1052, 492]
 		},
 		{
 			"button": "buttonC",
-			"buttonIDs": [
-				"C"
-			],
+			"buttonIDs": ["C"],
 			"graphic": "c",
 			"color": "0x44FF00",
-			"position": [
-				908,
-				596
-			]
-		},
-		{
-			"button": "buttonY",
-			"buttonIDs": [
-				"Y"
-			],
-			"graphic": "y",
-			"color": "0x4A35B9",
-			"position": [
-				1032,
-				472
-			]
+			"scale": 0.9,
+			"position": [938, 606]
 		},
 		{
 			"button": "buttonB",
-			"buttonIDs": [
-				"B"
-			],
+			"buttonIDs": ["B"],
 			"graphic": "b",
 			"color": "0xFFCB00",
-			"position": [
-				1032,
-				596
-			]
+			"scale": 0.9,
+			"position": [1052, 606]
 		},
 		{
 			"button": "buttonZ",
-			"buttonIDs": [
-				"Z"
-			],
+			"buttonIDs": ["Z"],
 			"graphic": "z",
 			"color": "0xCCB98E",
-			"position": [
-				1156,
-				472
-			]
+			"scale": 0.9,
+			"position": [1166, 492]
 		},
 		{
 			"button": "buttonA",
-			"buttonIDs": [
-				"A"
-			],
+			"buttonIDs": ["A"],
 			"graphic": "a",
 			"color": "0xFF0000",
-			"position": [
-				1156,
-				596
-			]
-		},
-		{
-			"button": "buttonUp2",
-			"buttonIDs": [
-				"UP2"
-			],
-			"graphic": "up",
-			"color": "0xFF12FA05",
-			"position": [
-				660,
-				472
-			]
-		},
-		{
-			"button": "buttonDown2",
-			"buttonIDs": [
-				"DOWN2"
-			],
-			"graphic": "down",
-			"color": "0xFF00FFFF",
-			"position": [
-				660,
-				596
-			]
+			"scale": 0.9,
+			"position": [1166, 606]
 		},
 		{
 			"button": "buttonG",
-			"buttonIDs": [
-				"G"
-			],
+			"buttonIDs": ["G"],
 			"graphic": "g",
 			"color": "0xFF009D",
-			"position": [
-				1156,
-				348
-			]
-		},
-		{
-			"button": "buttonF",
-			"buttonIDs": [
-				"F"
-			],
-			"graphic": "f",
-			"color": "0xB1FC00",
-			"position": [
-				1032,
-				348
-			]
+			"scale": 0.9,
+			"position": [938, 492]
 		}
 	]
 }

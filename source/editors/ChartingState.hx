@@ -649,7 +649,7 @@ class ChartingState extends MusicBeatState
 
     #if MOBILE_CONTROLS_ALLOWED
     swipeZoneSprite = new FlxSprite(0, 0).makeGraphic(200, FlxG.height, FlxColor.CYAN);
-    swipeZoneSprite.alpha = 0.2;
+    swipeZoneSprite.alpha = 0;
     swipeZoneSprite.scrollFactor.set(0, 0);
     add(swipeZoneSprite);
     #end
@@ -657,7 +657,7 @@ class ChartingState extends MusicBeatState
     super.create();
 
     #if MOBILE_CONTROLS_ALLOWED
-    mobileManager.addMobilePad('FULL_ALTER_2', 'CHART_EDITOR');
+    mobileManager.addMobilePad('NONE', 'CHART_EDITOR');
     #end
   }
 
@@ -2689,7 +2689,7 @@ class ChartingState extends MusicBeatState
       {
         selectionNote.visible = true;
         selectionNote.x = Math.floor(touch.x / GRID_SIZE) * GRID_SIZE;
-        if (FlxG.keys.pressed.SHIFT || mobileButtonPressed('Y')) selectionNote.y = touch.y;
+        if (FlxG.keys.pressed.SHIFT) selectionNote.y = touch.y;
         else
         {
           var gridmult = GRID_SIZE / (quantization / 16);
@@ -3001,11 +3001,11 @@ class ChartingState extends MusicBeatState
 
       if (curSelectedNote != null && curSelectedNote[1] > -1)
       {
-        if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('DOWN2') || #end FlxG.keys.justPressed.E || FlxG.keys.pressed.CONTROL && FlxG.mouse.wheel < 0)
+        if (FlxG.keys.justPressed.E || FlxG.keys.pressed.CONTROL && FlxG.mouse.wheel < 0)
         {
           changeNoteSustain(Conductor.stepCrochet);
         }
-        if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('UP2') || #end FlxG.keys.justPressed.Q || FlxG.keys.pressed.CONTROL && FlxG.mouse.wheel > 0)
+        if (FlxG.keys.justPressed.Q || FlxG.keys.pressed.CONTROL && FlxG.mouse.wheel > 0)
         {
           changeNoteSustain(-Conductor.stepCrochet);
         }
@@ -3177,7 +3177,7 @@ class ChartingState extends MusicBeatState
 
         var holdingShift:Float = 1;
         if (FlxG.keys.pressed.CONTROL) holdingShift = 0.25;
-        else if (#if MOBILE_CONTROLS_ALLOWED mobileButtonPressed('Y') || #end FlxG.keys.pressed.SHIFT) holdingShift = 4;
+        else if (FlxG.keys.pressed.SHIFT) holdingShift = 4;
 
         var daTime:Float = 700 * FlxG.elapsed * holdingShift;
 
@@ -3215,7 +3215,7 @@ class ChartingState extends MusicBeatState
 
       var style = currentType;
 
-      if (#if MOBILE_CONTROLS_ALLOWED mobileButtonPressed('Y') || #end FlxG.keys.pressed.SHIFT)
+      if (FlxG.keys.pressed.SHIFT)
       {
         style = 3;
       }
@@ -3313,7 +3313,7 @@ class ChartingState extends MusicBeatState
         }
       }
       var shiftThing:Int = 1;
-      if (#if MOBILE_CONTROLS_ALLOWED mobileButtonPressed('Y') || #end FlxG.keys.pressed.SHIFT) shiftThing = 4;
+      if (FlxG.keys.pressed.SHIFT) shiftThing = 4;
 
       if (#if MOBILE_CONTROLS_ALLOWED mobileButtonJustPressed('RIGHT') || #end FlxG.keys.justPressed.D)
       {
